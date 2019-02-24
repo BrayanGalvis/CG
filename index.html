@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			
+			var color1 = new THREE.Color( 0xFFFFFF );
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var xOrigen = new THREE.Vector3( 1, 0, 0 );
+		
+			//CREAR LAS GRILLAS
+			var gridHelperXY = new THREE.GridHelper( 10, 10, color1, color1);	//Se crea una grilla de tamaño 10 con 10 divisiones. Por defecto se crean en XZ.
+			gridHelperXY.rotateOnWorldAxis( xOrigen, THREE.Math.degToRad(90) );		//Rotar la grilla para que quede ubicada en el plano XY, la rotación se hace sobre el eje X
+		
+			//SE CREA EL PLANO
+			var geometry = new THREE.CircleGeometry( 2, 30 );
+			var material = new THREE.MeshBasicMaterial( {color: 0xcd7f32, side: THREE.DoubleSide} );
+			var plane = new THREE.Mesh( geometry, material );
+			var geometry = new THREE.CircleGeometry( 1.4, 30 );
+			var material = new THREE.MeshBasicMaterial( {color: 0x8a9597, side: THREE.DoubleSide} );
+			var plane2 = new THREE.Mesh( geometry, material );
+			var geometry = new THREE.PlaneGeometry( 0.2, 1.5 );
+			var material = new THREE.MeshBasicMaterial( {color: 0xcd7f32, side: THREE.DoubleSide} );
+			var plane3 = new THREE.Mesh( geometry, material );
+			var geometry = new THREE.CircleGeometry( 0.8, 30 );
+			var material = new THREE.MeshBasicMaterial( {color: 0xcd7f32, side: THREE.DoubleSide} );
+			var plane4 = new THREE.Mesh( geometry, material );
+			var geometry = new THREE.CircleGeometry( 0.4, 30 );
+			var material = new THREE.MeshBasicMaterial( {color: 0x8a9597, side: THREE.DoubleSide} );
+			var plane5 = new THREE.Mesh( geometry, material );
+			var geometry = new THREE.CircleGeometry( 0.8, 30 );
+			var material = new THREE.MeshBasicMaterial( {color: 0xcd7f32, side: THREE.DoubleSide} );
+			var plane6 = new THREE.Mesh( geometry, material );
+			var geometry = new THREE.CircleGeometry( 0.4, 30 );
+			var material = new THREE.MeshBasicMaterial( {color: 0x8a9597, side: THREE.DoubleSide} );
+			var plane7 = new THREE.Mesh( geometry, material );
+			
+			//SE REALIZA LA TRASLACION DE ESE OBJETO
+			var matrixT = new THREE.Matrix4();
+			matrixT.set( 1, 0, 0, 0,
+						 0, 1, 0, 0,
+						 0, 0, 1, 0,
+						 0, 0, 0, 1);
+			plane.applyMatrix(matrixT);
+			
+			var matrix1 = new THREE.Matrix4();
+			matrix1.set( 1, 0, 0, -0.9,
+						 0, 1, 0, 0,
+						 0, 0, 1, 0,
+						 0, 0, 0, 1);
+			plane3.applyMatrix(matrix1)
+			
+			var matrixV = new THREE.Matrix4();
+			matrixV.set( 0.5, 0, 0, -0.2,
+						 0, 1, 0, 0,
+						 0, 0, 1, 0,
+						 0, 0, 0, 1);
+			plane4.applyMatrix(matrixV)
+			plane5.applyMatrix(matrixV)
+			
+			var matrixV2 = new THREE.Matrix4();
+			matrixV2.set( 0.5, 0, 0, 0.8,
+						 0, 1, 0, 0,
+						 0, 0, 1, 0,
+						 0, 0, 0, 1);
+			plane6.applyMatrix(matrixV2)
+			plane7.applyMatrix(matrixV2)
+
+			//TRANSFORMACIONES		
+			var cA = Math.cos(THREE.Math.degToRad(45));
+			var sA = Math.sin(THREE.Math.degToRad(45));
+			var matrixR = new THREE.Matrix4();
+			matrixR.set( cA,-sA, 0, 0,
+						 sA, cA, 0, 0,
+						 0,   0, 1, 0,
+						 0,   0, 0, 1);						 
+			plane.applyMatrix(matrixR);
+			
+
+			
+			//SE AGREGAN LOS OBJETOS A LA ESCENA
+			scene.add( gridHelperXY );		
+			scene.add( plane );
+			scene.add( plane2 );
+			scene.add( plane3 );
+			scene.add( plane4 );
+			scene.add( plane5 );
+			scene.add( plane6 );
+			scene.add( plane7 );
+			
+			//SE REUBICA LA CAMARA PARA VISUALIZAR LOS OBJETOS
+			camera.translateZ( 12 );
+			camera.lookAt( origin );
+			
+			//SE RENDERIZA LA ESCENA
+			renderer.render( scene, camera );				
+		</script>
+	</body>
+</html>
