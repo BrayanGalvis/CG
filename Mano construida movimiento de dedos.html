@@ -572,9 +572,9 @@ hips.add(dedo5inter2);
 
 	//Variable para ángulo de rotación de caderas
 		
-		if(thetaSum>=60*Math.PI/180)
+		if(thetaSum>=30*Math.PI/270)
 			positivo = false;
-		if(thetaSum<=-60*Math.PI/180)
+		if(thetaSum<=-60*Math.PI/120)
 			positivo = true;
 		
 
@@ -593,6 +593,9 @@ hips.add(dedo5inter2);
 			else
 				theta = .05;
 		}
+		
+		
+		
 
              
 
@@ -615,6 +618,13 @@ hips.add(dedo5inter2);
 				0, 0, 0, 1	);
 		
 		hips.matrix.multiply(t); 	//APLICAR LA TRASLACIÓN A NIVEL LOCAL
+		
+		
+		
+		//Otra traslación 
+		
+		
+		
 		
 		//ROTACIONES
 		var ct1 = Math.cos(theta);
