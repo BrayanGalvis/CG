@@ -55,15 +55,6 @@ var d1a3= false;
 		var Rkey = false;
 		var Tkey = false;
 		
-		var Akey = false;
-		var Zkey = false;
-		var Skey = false;
-		var Xkey = false;
-		var Dkey = false;
-		var Ckey = false;
-		var Fkey = false;
-		var Vkey = false;
-		var Gkey = false;
 		
 =======
 >>>>>>> parent of da17bff... Update Mano construida movimiento de dedos.html
@@ -96,14 +87,17 @@ var d1a3= false;
 					case 40: // TRASLADAR ATR√ÅS
 						downArrow = true;
 						break;
-						/*
 					case 83: // ESCALA AGRANDAR
 						scaleUp = true;
 						break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 						
 =======
 >>>>>>> parent of da17bff... Update Mano construida movimiento de dedos.html
+=======
+						/*
+>>>>>>> parent of e15f720... Update Mano construida movimiento de dedos.html
 					case 87: // ESCALA DISMINUIR
 						scaleDown = true;
 						break;
@@ -136,6 +130,7 @@ var d1a3= false;
 						break;
 						
 						
+<<<<<<< HEAD
 						////////Falanjes especÌficos
 						//A
 						case 65:
@@ -180,6 +175,8 @@ var d1a3= false;
 						
 =======
 >>>>>>> parent of da17bff... Update Mano construida movimiento de dedos.html
+=======
+>>>>>>> parent of e15f720... Update Mano construida movimiento de dedos.html
 
 /*
 					case 88: // SELECCIONAR EJE X DE ROTACION
@@ -231,10 +228,10 @@ xAxis = false;
 					case 39: // ROTAR CCW
 						rightArrow = false;
 						break;
-						/*
 					case 83: // ESCALA AGRANDAR
 						scaleUp = false;
 						break;
+						/*
 					case 87: // ESCALA DISMINUIR
 						scaleDown = false;
 						break;
@@ -262,6 +259,7 @@ xAxis = false;
 						Tkey=false;
 						break;
 						
+<<<<<<< HEAD
 						////////Falanjes especÌficos
 						//A
 						case 65:
@@ -306,6 +304,8 @@ xAxis = false;
 						
 =======
 >>>>>>> parent of da17bff... Update Mano construida movimiento de dedos.html
+=======
+>>>>>>> parent of e15f720... Update Mano construida movimiento de dedos.html
 				}
 			};	  	
 			
@@ -976,183 +976,6 @@ dedo5inter2.applyMatrix(r1);
 				
 			}
 		}
-		
-		
-		/////////// Falanjes especÌficas
-		
-		if(Akey) {
-			tx=0; ty=0; tz=0;
-		     leftLeg2.applyMatrix(r1);
-                leftLeg3.applyMatrix(r1);
-leftleginter2.applyMatrix(r1);
-leftleginter3.applyMatrix(r1);
-			
-			if(positivo){
-				theta = .05;				     
-		  			
-			}
-		
-			else{
-				theta = -.05;
-				
-			}
-		}
-		
-		if(Zkey) {
-			tx=0; ty=0; tz=0;
-		   
-                leftLeg3.applyMatrix(r1);
-leftleginter3.applyMatrix(r1);
-			
-			if(positivo){
-				theta = .05;				     
-		  			
-			}
-		
-			else{
-				theta = -.05;
-				
-			}
-		}
-		
-		
-			if(Skey) {
-			tx=0; ty=0; tz=0;
-		    
-		     dedo22.applyMatrix(r1);
-		     dedo23.applyMatrix(r1);
-			
-		
-dedo1inter2.applyMatrix(r1);		
-dedo1inter3.applyMatrix(r1);
-			
-			if(positivo){
-				theta = .05;				     
-		  			
-			}
-		
-			else{
-				theta = -.05;
-				
-			}
-		}
-		
-		if(Xkey) {
-			tx=0; ty=0; tz=0;
-		   
-		     dedo23.applyMatrix(r1);
-					
-dedo1inter3.applyMatrix(r1);
-			
-			if(positivo){
-				theta = .05;				     
-		  			
-			}
-		
-			else{
-				theta = -.05;
-				
-			}
-		}
-		
-		
-		
-			if(Dkey) {
-			tx=0; ty=0; tz=0;
-		    
-                dedo32.applyMatrix(r1);
-                dedo33.applyMatrix(r1);	
-dedo2inter2.applyMatrix(r1);
-dedo2inter3.applyMatrix(r1);
-			
-			if(positivo){
-				theta = .05;				     
-		  			
-			}
-		
-			else{
-				theta = -.05;
-				
-			}
-		}
-		
-		if(Ckey) {
-			tx=0; ty=0; tz=0;
-		 		              
-                dedo33.applyMatrix(r1);	
-dedo2inter3.applyMatrix(r1);
-			
-			if(positivo){
-				theta = .05;				     
-		  			
-			}
-		
-			else{
-				theta = -.05;
-				
-			}
-		}
-		
-		
-			if(Fkey) {
-			tx=0; ty=0; tz=0;
-		    
-              
-            dedo42.applyMatrix(r1);
-            dedo43.applyMatrix(r1);		
-dedo3inter2.applyMatrix(r1);
-dedo3inter3.applyMatrix(r1);
-			if(positivo){
-				theta = .05;				     
-		  			
-			}
-		
-			else{
-				theta = -.05;
-				
-			}
-		}
-		
-		if(Vkey) {
-			tx=0; ty=0; tz=0;
-		 		              
-             
-            dedo43.applyMatrix(r1);		
-dedo3inter3.applyMatrix(r1);
-			
-			if(positivo){
-				theta = .05;				     
-		  			
-			}
-		
-			else{
-				theta = -.05;
-				
-			}
-		}
-		
-		if(Gkey) {
-			tx=0; ty=0; tz=0;
-		 		              
-             
-             
-                dedo52.applyMatrix(r1);
-
-		
-dedo5inter2.applyMatrix(r1);
-			
-			if(positivo){
-				theta = .05;				     
-		  			
-			}
-		
-			else{
-				theta = -.05;
-				
-			}
-		}
-		
-		
 		thetaSum+=theta;
 		
 =======
@@ -1168,7 +991,7 @@ dedo5inter2.applyMatrix(r1);
 		hips2.applyMatrix( new THREE.Matrix4().getInverse(tempMatrix) );
 		hips2.applyMatrix(r);
 		hips2.applyMatrix( tempMatrix );
-//Lexiste
+
 
 /*
 // Esto hace que los dedos roten
