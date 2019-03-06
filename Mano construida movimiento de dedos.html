@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +15,7 @@
         </style>
     </head>
     <body>
-        <div id="info">RELACIÃ“N PARENT-CHILD<br/>
+        <div id="info">RELACIÓN PARENT-CHILD<br/>
             Usar flecha arriba y abajo para trasladar.<br/>
             Usar flechas laterales para rotar.<br/>
         </div>
@@ -47,7 +48,6 @@ var d1a3= false;
 		var rightArrow = false;
 		var scaleUp = false;
 		var scaleDown = false;
-<<<<<<< HEAD
 		
 		var Qkey = false;
 		var Wkey = false;
@@ -55,9 +55,16 @@ var d1a3= false;
 		var Rkey = false;
 		var Tkey = false;
 		
+		var Akey = false;
+		var Zkey = false;
+		var Skey = false;
+		var Xkey = false;
+		var Dkey = false;
+		var Ckey = false;
+		var Fkey = false;
+		var Vkey = false;
+		var Gkey = false;
 		
-=======
->>>>>>> parent of da17bff... Update Mano construida movimiento de dedos.html
 		var xAxis = true;
 		var yAxis = false;
 		var zAxis = false;
@@ -84,30 +91,24 @@ var d1a3= false;
 					case 38: // TRASLADAR ADELANTE
 						upArrow = true;
 						break;
-					case 40: // TRASLADAR ATRÃS
+					case 40: // TRASLADAR ATRÁS
 						downArrow = true;
 						break;
+						/*
 					case 83: // ESCALA AGRANDAR
 						scaleUp = true;
 						break;
-<<<<<<< HEAD
-<<<<<<< HEAD
 						
-=======
->>>>>>> parent of da17bff... Update Mano construida movimiento de dedos.html
-=======
-						/*
->>>>>>> parent of e15f720... Update Mano construida movimiento de dedos.html
 					case 87: // ESCALA DISMINUIR
 						scaleDown = true;
 						break;
+						*/
 					case 37: // ROTAR CW
 						leftArrow = true;
 						break;
 					case 39: // ROTAR CCW
 						rightArrow = true;
 						break;
-<<<<<<< HEAD
 					//Q
 					case 81:
 						Qkey=true;
@@ -130,7 +131,6 @@ var d1a3= false;
 						break;
 						
 						
-<<<<<<< HEAD
 						////////Falanjes específicos
 						//A
 						case 65:
@@ -173,10 +173,6 @@ var d1a3= false;
 						break;
 						
 						
-=======
->>>>>>> parent of da17bff... Update Mano construida movimiento de dedos.html
-=======
->>>>>>> parent of e15f720... Update Mano construida movimiento de dedos.html
 
 /*
 					case 88: // SELECCIONAR EJE X DE ROTACION
@@ -201,15 +197,6 @@ xAxis = false;
 
 
 
-///////////////Articulaciones dedo 1:
-/*case 90: 
-			         		if(d1a1==true){d1a1=false;}
-                           if(d1a1==false){d1a1=true;}       
-
-						break;*/
-
-
-
 
 				}
 			};	  
@@ -228,14 +215,13 @@ xAxis = false;
 					case 39: // ROTAR CCW
 						rightArrow = false;
 						break;
+						/*
 					case 83: // ESCALA AGRANDAR
 						scaleUp = false;
 						break;
-						/*
 					case 87: // ESCALA DISMINUIR
 						scaleDown = false;
 						break;
-<<<<<<< HEAD
 						*/
 						//Q
 						case 81:
@@ -259,7 +245,6 @@ xAxis = false;
 						Tkey=false;
 						break;
 						
-<<<<<<< HEAD
 						////////Falanjes específicos
 						//A
 						case 65:
@@ -302,10 +287,6 @@ xAxis = false;
 						break;
 						
 						
-=======
->>>>>>> parent of da17bff... Update Mano construida movimiento de dedos.html
-=======
->>>>>>> parent of e15f720... Update Mano construida movimiento de dedos.html
 				}
 			};	  	
 			
@@ -349,7 +330,7 @@ xAxis = false;
             var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
             var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
 			
-			//CREAR LAS GEOMETRÃAS
+			//CREAR LAS GEOMETRÍAS
 			geometry1 = new THREE.BoxGeometry( 3, 2.5, 1 );
 			for ( var i = 0; i < geometry1.faces.length; i ++ ) {
 				switch(i){
@@ -655,8 +636,8 @@ dedo3inter3.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
 
 
 			hips.add(head);
-		     hips.add(torso);
-
+		  //   hips.add(torso);
+/*
 		     hips.add(leftLeg);
 		     hips.add(dedo2);
                 hips.add(dedo3);
@@ -696,6 +677,54 @@ hips.add(dedo3inter3);
 
 hips.add(dedo5inter1);
 hips.add(dedo5inter2);
+*/
+
+		   
+		  
+			
+			
+		
+			
+			
+			hips2.add(leftLeg);
+		     hips2.add(dedo2);
+                hips2.add(dedo3);
+                hips2.add(dedo4);
+
+	          hips2.add(leftLeg2);
+		     hips2.add(dedo22);
+                hips2.add(dedo32);
+                hips2.add(dedo42);
+
+                hips2.add(leftLeg3);
+		     hips2.add(dedo23);
+                hips2.add(dedo33);
+                hips2.add(dedo43);
+
+
+
+                hips2.add(dedo5);
+                hips2.add(dedo52);
+		
+
+hips2.add(leftleginter1);
+hips2.add(dedo1inter1);
+hips2.add(dedo2inter1);
+hips2.add(dedo3inter1);	
+
+hips2.add(leftleginter2);
+hips2.add(dedo1inter2);
+hips2.add(dedo2inter2);
+hips2.add(dedo3inter2);
+
+hips2.add(leftleginter3);
+hips2.add(dedo1inter3);
+hips2.add(dedo2inter3);
+hips2.add(dedo3inter3);
+
+
+hips2.add(dedo5inter1);
+hips2.add(dedo5inter2);
 
 
 
@@ -730,15 +759,16 @@ hips.add(dedo5inter2);
 		var theta=0;
 		var theta2=0;
 
-//Variable para Ã¡ngulo de rotacion de piernas
+//Variable para ángulo de rotacion de piernas
 		var sigma=0;		
 
-	//Variable para Ã¡ngulo de rotaciÃ³n de caderas
+	//Variable para ángulo de rotación de caderas
 		
-		if(thetaSum>=30*Math.PI/270)
-			positivo = false;
-		if(thetaSum<=-60*Math.PI/120)
-			positivo = true;
+		if(thetaSum>=30*Math.PI/270){
+			positivo = false;}
+		if(thetaSum<=-60*Math.PI/120){
+			positivo = true;}
+		
 		/*if(theta2Sum>=30*Math.PI/270)
 			positivo = false;
 		if(theta2Sum<=-60*Math.PI/120)
@@ -758,12 +788,15 @@ hips.add(dedo5inter2);
 		if(downArrow) {
 			tx=0; ty=0; tz=0;
 			if(positivo)
-				theta = -.05;
-				//theta2 = .005;
-			else
 				theta = .05;
 				//theta2 = .005;
+			else
+				theta = -.05;
+				//theta2 = .005;
 		}
+		
+		
+			
 		
 		
 		
@@ -773,26 +806,26 @@ hips.add(dedo5inter2);
 
              
 
-		thetaSum+=theta;
+		//thetaSum+=theta;
 		//theta2Sum+=theta2;
 		
-		if(rightArrow)
-			sigma = -.1;
-		if(leftArrow)
-			sigma = .1;
+		if(rightArrow){
+			sigma = -.1;}
+		if(leftArrow){
+			sigma = .1;}
 		
 
 
 
 
-		//MATRIZ DE TRASLACIÃ“N
+		//MATRIZ DE TRASLACIÓN
 		var t = new THREE.Matrix4();
 		t.set( 	1, 0, 0, tx,
 				0, 1, 0, ty, 
 				0, 0, 1, tz,
 				0, 0, 0, 1	);
 		
-		hips.matrix.multiply(t); 	//APLICAR LA TRASLACIÃ“N A NIVEL LOCAL
+		hips.matrix.multiply(t); 	//APLICAR LA TRASLACIÓN A NIVEL LOCAL
 		hips2.matrix.multiply(t);
 		
 		
@@ -812,7 +845,7 @@ hips.add(dedo5inter2);
 		
 		
 		
-		//rotarsiÃ±o
+		//rotarsiño
 		var ct1 = Math.cos(theta);
 		var st1 = Math.sin(theta);
 		var r10 = new THREE.Matrix4();
@@ -822,8 +855,8 @@ hips.add(dedo5inter2);
 					0,  0,  0, 1 );	
 		
 		//hips2.matrix.multiply(r10);
-		
-				//pulgarsiÃ±o
+		/*
+				//pulgarsiño
 				/*var ct2 = Math.cos(theta2);
 				var st2 = Math.sin(theta2);
 				var rpulgar=new THREE.Matrix4();
@@ -855,12 +888,12 @@ hips.add(dedo5inter2);
 		var r1 = new THREE.Matrix4();
 		var r2 = new THREE.Matrix4();
 
-		//MATRIZ DE ROTACIÃ“N EN EJE Y
+		//MATRIZ DE ROTACIÓN EN EJE Y
 		r.set( 	   cs,  0, ss, 0,
 					0,  1,  0, 0, 
 				  -ss,  0, cs, 0,
 					0,  0,  0, 1 );	
-		//MATRICES DE ROTACIÃ“N EN EJE LOCAL DE PIERNAS	
+		//MATRICES DE ROTACIÓN EN EJE LOCAL DE PIERNAS	
 		r1.set( 	1,  0,  0, 0,
 					0, ct1,-st1, 0, 
 					0, st1, ct1, 0,
@@ -868,12 +901,12 @@ hips.add(dedo5inter2);
 		r2.set( 	1,  0,  0, 0,
 					0, ct2,-st2, 0, 
 					0, st2, ct2, 0,
-					0,  0,  0, 1 );							rstop.set(  1,  0,  0, 0,
+					0,  0,  0, 1 );							
+		rstop.set(  1,  0,  0, 0,
 					0, 1,0, 0, 
 					0, 0, 1, 0,
 					0,  0,  0, 1 );			
 		
-<<<<<<< HEAD
 		
 		//////////////// Articulaciones
 		
@@ -976,10 +1009,185 @@ dedo5inter2.applyMatrix(r1);
 				
 			}
 		}
+		
+		
+		/////////// Falanjes específicas
+		
+		if(Akey) {
+			tx=0; ty=0; tz=0;
+		     leftLeg2.applyMatrix(r1);
+                leftLeg3.applyMatrix(r1);
+leftleginter2.applyMatrix(r1);
+leftleginter3.applyMatrix(r1);
+			
+			if(positivo){
+				theta = .05;				     
+		  			
+			}
+		
+			else{
+				theta = -.05;
+				
+			}
+		}
+		
+		if(Zkey) {
+			tx=0; ty=0; tz=0;
+		   
+                leftLeg3.applyMatrix(r1);
+leftleginter3.applyMatrix(r1);
+			
+			if(positivo){
+				theta = .05;				     
+		  			
+			}
+		
+			else{
+				theta = -.05;
+				
+			}
+		}
+		
+		
+			if(Skey) {
+			tx=0; ty=0; tz=0;
+		    
+		     dedo22.applyMatrix(r1);
+		     dedo23.applyMatrix(r1);
+			
+		
+dedo1inter2.applyMatrix(r1);		
+dedo1inter3.applyMatrix(r1);
+			
+			if(positivo){
+				theta = .05;				     
+		  			
+			}
+		
+			else{
+				theta = -.05;
+				
+			}
+		}
+		
+		if(Xkey) {
+			tx=0; ty=0; tz=0;
+		   
+		     dedo23.applyMatrix(r1);
+					
+dedo1inter3.applyMatrix(r1);
+			
+			if(positivo){
+				theta = .05;				     
+		  			
+			}
+		
+			else{
+				theta = -.05;
+				
+			}
+		}
+		
+		
+		
+			if(Dkey) {
+			tx=0; ty=0; tz=0;
+		    
+                dedo32.applyMatrix(r1);
+                dedo33.applyMatrix(r1);	
+dedo2inter2.applyMatrix(r1);
+dedo2inter3.applyMatrix(r1);
+			
+			if(positivo){
+				theta = .05;				     
+		  			
+			}
+		
+			else{
+				theta = -.05;
+				
+			}
+		}
+		
+		if(Ckey) {
+			tx=0; ty=0; tz=0;
+		 		              
+                dedo33.applyMatrix(r1);	
+dedo2inter3.applyMatrix(r1);
+			
+			if(positivo){
+				theta = .05;				     
+		  			
+			}
+		
+			else{
+				theta = -.05;
+				
+			}
+		}
+		
+		
+			if(Fkey) {
+			tx=0; ty=0; tz=0;
+		    
+              
+            dedo42.applyMatrix(r1);
+            dedo43.applyMatrix(r1);		
+dedo3inter2.applyMatrix(r1);
+dedo3inter3.applyMatrix(r1);
+			if(positivo){
+				theta = .05;				     
+		  			
+			}
+		
+			else{
+				theta = -.05;
+				
+			}
+		}
+		
+		if(Vkey) {
+			tx=0; ty=0; tz=0;
+		 		              
+             
+            dedo43.applyMatrix(r1);		
+dedo3inter3.applyMatrix(r1);
+			
+			if(positivo){
+				theta = .05;				     
+		  			
+			}
+		
+			else{
+				theta = -.05;
+				
+			}
+		}
+		
+		if(Gkey) {
+			tx=0; ty=0; tz=0;
+		 		              
+             
+             
+                dedo52.applyMatrix(r1);
+
+		
+dedo5inter2.applyMatrix(r1);
+			
+			if(positivo){
+				theta = .05;				     
+		  			
+			}
+		
+			else{
+				theta = -.05;
+				
+			}
+		}
+		
+		
 		thetaSum+=theta;
 		
-=======
->>>>>>> parent of da17bff... Update Mano construida movimiento de dedos.html
 		//ROTACION EN UN EJE PARALELO
 		var tempMatrix = new THREE.Matrix4();
 		tempMatrix.copyPosition( hips.matrix );
@@ -991,7 +1199,7 @@ dedo5inter2.applyMatrix(r1);
 		hips2.applyMatrix( new THREE.Matrix4().getInverse(tempMatrix) );
 		hips2.applyMatrix(r);
 		hips2.applyMatrix( tempMatrix );
-
+//Lexiste
 
 /*
 // Esto hace que los dedos roten
@@ -1001,55 +1209,31 @@ dedo5inter2.applyMatrix(r1);
 	     dedo4.applyMatrix(r1);
 
 */
-
+/*
                 
 		     leftLeg.applyMatrix(r1);
 		     dedo2.applyMatrix(r1);
                 dedo3.applyMatrix(r1);
                 dedo4.applyMatrix(r1);
+*/
+		
+		
+                
+                
 
-                leftLeg2.applyMatrix(r1);
+                
 				/*leftLeg2.applyMatrix(regresar);
 				leftLeg2.applyMatrix(r10);
 				leftLeg2.applyMatrix(normal);*/
 				
-		     dedo22.applyMatrix(r1);
-                dedo32.applyMatrix(r1);
-                dedo42.applyMatrix(r1);
-
-                leftLeg3.applyMatrix(r1);
-		     dedo23.applyMatrix(r1);
-                dedo33.applyMatrix(r1);
-                dedo43.applyMatrix(r1);
 
 
-                dedo5.applyMatrix(r1);
-                dedo52.applyMatrix(r1);
-
-		
-leftleginter1.applyMatrix(r1);
-dedo1inter1.applyMatrix(r1);
-dedo2inter1.applyMatrix(r1);
-dedo3inter1.applyMatrix(r1);
-
-leftleginter2.applyMatrix(r1);
-dedo1inter2.applyMatrix(r1);
-dedo2inter2.applyMatrix(r1);
-dedo3inter2.applyMatrix(r1);
-
-leftleginter3.applyMatrix(r1);
-dedo1inter3.applyMatrix(r1);
-dedo2inter3.applyMatrix(r1);
-dedo3inter3.applyMatrix(r1);
-
-
-dedo5inter1.applyMatrix(r1);
-dedo5inter2.applyMatrix(r1);
+               
 
 
 
 
-
+//
 
 
 
