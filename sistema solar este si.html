@@ -13,7 +13,7 @@
 		var startTime = Date.now();
 		
 		var p1;
-		var cilindro2, lunita;
+		var cilindro2, lunita, Anillo;
 		var upArrow = false;
 		var downArrow = false;
 		
@@ -97,7 +97,7 @@
 			
 			var geoCilindro2 = new THREE.Geometry();
             var zTemp = 0;
-            var res2 = 50.0;
+            var res2 = 150.0;
             for( var i = 0; i < res2; i++){
                 for( var j = 0; j < res2; j++){
                     var punto2 = new THREE.Vector3();
@@ -111,8 +111,8 @@
 			var geolunita = new THREE.Geometry();
             var zTemp = 0;
             var res3 = 50.0;
-            for( var i = 0; i < res2; i++){
-                for( var j = 0; j < res2; j++){
+            for( var i = 0; i < res3; i++){
+                for( var j = 0; j < res3; j++){
                     var punto3 = new THREE.Vector3();
                     punto3.x = 1*Math.cos( ( j * 2.0 * Math.PI ) / res3) * Math.sin(( i * 2.0 * Math.PI ) / res3) ;
                     punto3.y = 1*Math.sin( ( j * 2.0 * Math.PI ) / res3) * Math.sin(( i * 2.0 * Math.PI ) / res3);
@@ -121,17 +121,32 @@
                 }
 			}
 			
+			var geoanillo = new THREE.Geometry();
+            var zTemp = 0;
+            var res4 = 50.0;
+            for( var i = 0; i < res4; i++){
+                for( var j = 0; j < res4; j++){
+                    var punto4 = new THREE.Vector3();
+                    punto4.x = 3*Math.cos( ( j * 2.0 * Math.PI ) / res4) * Math.sin(( i * 2.0 * Math.PI ) / res4);
+                    punto4.y = 0.2*Math.cos( ( i * 2.0 * Math.PI ) / res4) ;
+                    punto4.z = 3*Math.sin( ( j * 2.0 * Math.PI ) / res4) * Math.sin(( i * 2.0 * Math.PI ) / res4);
+                    geoanillo.vertices.push( punto4 );
+                }
+			}
+			
+			
 			
 			//CREAR LOS MATERIALES            
 			var matPunto = new THREE.PointsMaterial( { color: 0xFFFF00, size: 0.1 } );
 			var matPunto2 = new THREE.PointsMaterial( { color: 0x0060FF, size: 0.1 } );
 			var matPunto3 = new THREE.PointsMaterial( { color: 0xE6E6E6, size: 0.1 } );
+			var matPunto4 = new THREE.PointsMaterial( { color: 0xFFFFFF, size: 0.1 } );
 			
 			//CREAR LOS OBJETOS
 			var cilindro = new THREE.Points( geoCilindro, matPunto );
 			cilindro2 = new THREE.Points( geoCilindro2, matPunto2 );
 			lunita =new THREE.Points (geolunita, matPunto3);
-		  
+			Anillo =new THREE.Points (geoanillo, matPunto4);
 		  	
 			
 			var Txmerc=25;
@@ -158,7 +173,8 @@
 			
 			cilindro2.add(lunita);
 		  		
-			//scene.add( lunita );	
+			//scene.add( lunita );
+			cilindro2.add(Anillo);			
 			scene.add( cilindro );
 			scene.add( cilindro2 );
 			
@@ -240,10 +256,10 @@
 		
 		//scene.add(cilindro2);
 		
-        camera.position.x = 120*Math.cos(dtime/10000);
+        camera.position.x = 100*Math.cos(dtime/10000);
 		camera.position.y=40;
-        camera.position.z = 120*Math.sin(dtime/10000);
-        camera.lookAt( -1, -1, -1 );
+        camera.position.z = 100*Math.sin(dtime/10000);
+        camera.lookAt( 0, 0, 0 );
         renderer.render( scene, camera );
     }
     </script>
