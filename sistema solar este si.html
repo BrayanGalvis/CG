@@ -1,7 +1,7 @@
  <!DOCTYPE html>
 <html>
   <head>
-    <title>Ej: Cilindro</title>
+    <title>Sistema solar</title>
     <style>
       html, body { margin: 0; padding: 0; overflow: hidden; }
     </style>
@@ -76,21 +76,7 @@
 		  	var colorG = new THREE.Color( 0x33AA33 );
 		  	var colorB = new THREE.Color( 0x333366 );
 		  
-		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
-		  	var axesHelper = new THREE.AxesHelper( size );
-		  	var gridHelperXY = new THREE.GridHelper( size, divisions, color1, color1);
-		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color2, color2 );
-		  	var gridHelperYZ = new THREE.GridHelper( size, divisions, color2, color2 );
-            
-            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
-            gridHelperXY.rotateOnWorldAxis ( x, THREE.Math.degToRad(90) );
-            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
-            gridHelperYZ.rotateOnWorldAxis ( z, THREE.Math.degToRad(90) );
-            
-            //CREAR LAS FLECHAS QUE INDICAN LOS EJES DE COORDENADAS 3D
-            var arrowX = new THREE.ArrowHelper( x, origin, arrowSize, colorR );
-            var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
-            var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
+		  	
 			
 			//CREAR LAS GEOMETRÍAS
             //Punto
