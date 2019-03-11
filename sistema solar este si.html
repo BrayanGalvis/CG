@@ -1,35 +1,21 @@
  <!DOCTYPE html>
 <html>
   <head>
-    <title>sistema solar</title>
+    <title>Ej: Cilindro</title>
     <style>
       html, body { margin: 0; padding: 0; overflow: hidden; }
-            #info {
-                position: absolute;
-                padding: 10px;
-                width: 100%;
-                text-align: center;
-                color: #FFFFFF;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="info">RELACI”N PARENT-CHILD<br/>
-            Usar flecha arriba y abajo para gacer mover.<br/>
-        </div>
     </style>
   </head>
   <body>
     <script src="js/three.min.js"></script>
     <script>
-		var scene, aspect, camera, renderer;
+		var scene, aspect, camera, renderer, p;
 		var startTime = Date.now();
 		
-		
+		var p1;
+		var cilindro2;
 		var upArrow = false;
 		var downArrow = false;
-		var leftArrow = false;
-		var rightArrow = false;
 		
 		var thetaSum=0;
 		var positivo=false;
@@ -45,6 +31,7 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 			
+			
 			// Funciones de teclado
 			
 			var onKeyDown = function ( event ) {
@@ -55,12 +42,7 @@
 					case 40: 
 						downArrow = true;
 						break;
-					case 37: 
-						leftArrow = true;
-						break;
-					case 39: 
-						rightArrow = true;
-						break;
+					
 				}
 			};
 			var onKeyUp = function ( event ) {
@@ -71,17 +53,13 @@
 					case 40:
 						downArrow = false;
 						break;
-					case 37:
-						leftArrow = false;
-						break;
-					case 39: 
-						rightArrow = false;
-						break;
+					
 				}
 			};
 			
 			document.addEventListener( 'keydown', onKeyDown, false );
 			document.addEventListener( 'keyup', onKeyUp, false );
+			
 			
 			
 				  
@@ -98,14 +76,29 @@
 		  	var colorG = new THREE.Color( 0x33AA33 );
 		  	var colorB = new THREE.Color( 0x333366 );
 		  
-		  
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper = new THREE.AxesHelper( size );
+		  	var gridHelperXY = new THREE.GridHelper( size, divisions, color1, color1);
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color2, color2 );
+		  	var gridHelperYZ = new THREE.GridHelper( size, divisions, color2, color2 );
+            
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            gridHelperXY.rotateOnWorldAxis ( x, THREE.Math.degToRad(90) );
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+            gridHelperYZ.rotateOnWorldAxis ( z, THREE.Math.degToRad(90) );
+            
+            //CREAR LAS FLECHAS QUE INDICAN LOS EJES DE COORDENADAS 3D
+            var arrowX = new THREE.ArrowHelper( x, origin, arrowSize, colorR );
+            var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
+            var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
+			
 			//CREAR LAS GEOMETR√çAS
             //Punto
 			
 			
             var geoCilindro = new THREE.Geometry();
             var zTemp = 0;
-            var res = 100;
+            var res = 100.0;
             for( var i = 0; i < res; i++){
                 for( var j = 0; j < res; j++){
                     var punto = new THREE.Vector3();
@@ -116,20 +109,15 @@
                 }
             }
 			
-			
-			
-			
-			
-			
 			var geoCilindro2 = new THREE.Geometry();
             var zTemp = 0;
-            var res2 = 100;
+            var res2 = 50.0;
             for( var i = 0; i < res2; i++){
                 for( var j = 0; j < res2; j++){
                     var punto2 = new THREE.Vector3();
-                    punto2.x = Math.cos( ( j * 2.0 * Math.PI ) / res2) * Math.sin(( i * 2.0 * Math.PI ) / res2);
-                    punto2.y = Math.sin( ( j * 2.0 * Math.PI ) / res2) * Math.sin(( i * 2.0 * Math.PI ) / res2);
-                    punto2.z = Math.cos( ( i * 2.0 * Math.PI ) / res2 ) ;
+                    punto2.x = 2*Math.cos( ( j * 2.0 * Math.PI ) / res2) * Math.sin(( i * 2.0 * Math.PI ) / res2) ;
+                    punto2.y = 2*Math.sin( ( j * 2.0 * Math.PI ) / res2) * Math.sin(( i * 2.0 * Math.PI ) / res2);
+                    punto2.z = 2*Math.cos( ( i * 2.0 * Math.PI ) / res2) ;
                     geoCilindro2.vertices.push( punto2 );
                 }
 			}
@@ -141,13 +129,59 @@
 			
 			//CREAR LOS OBJETOS
 			var cilindro = new THREE.Points( geoCilindro, matPunto );
-			var cilindro2 = new THREE.Points( geoCilindro2, matPunto2 );
+			cilindro2 = new THREE.Points( geoCilindro2, matPunto2 );
 		  
-		  var tx=0, ty=0, tz=0;
-		var theta=0;
-		var sigma=0;
+		  	
+			
+			var Txmerc=25;
+				var mercT=new THREE.Matrix4();
+				mercT.set (1, 0, 0, Txmerc,
+						   0, 1, 0, 0,
+						   0, 0, 1, 0,
+						   0, 0, 0, 1);
 		  
-		  // Variable de rotaciÛn del ·ngulo
+				cilindro2.applyMatrix(mercT);
+				
+			punto.add(cilindro2);
+			
+			//AGREGAR A LA ESCENA
+		  		
+			scene.add( cilindro );
+			scene.add( cilindro2 );
+			
+			
+    }
+    function animate() {
+        render();
+        requestAnimationFrame( animate );
+    }
+    
+    function render(){
+        var dtime = Date.now()-startTime;
+		
+		
+		if(thetaSum>=30*Math.PI/270){
+			positivo = false;}
+		if(thetaSum<=-60*Math.PI/120){
+			positivo = true;}
+			
+			if(upArrow) {
+			tx=0; ty=0; tz=0;
+			if(positivo)
+				theta = .05;
+			else
+				theta = -.05;
+		}
+		if(downArrow) {
+			tx=0; ty=0; tz=0;
+			if(positivo)
+				theta = .05;
+			else
+				theta = -.05;
+		}
+		
+		
+		// Variable de rotaciÛn del ·ngulo
 		    if(upArrow) {
 			tx=0; ty=0; tz=.1;
 			if(positivo)
@@ -163,98 +197,39 @@
 				theta = -.1;
 		}
 		thetaSum+=theta;
-		   
-		  if(rightArrow){
-			sigma = -.1;}
-		if(leftArrow){
-			sigma = .1;}
-		  
-		  //traslaciÛn mercurio
-				var Txmerc=5;
-				var mercT=new THREE.Matrix4();
-				mercT.set (1, 0, 0, Txmerc,
-						   0, 1, 0, 0,
-						   0, 0, 1, 0,
-						   0, 0, 0, 1);
-		  
-				cilindro2.applyMatrix(mercT);
+		
+		
+		
+		
+		//MATRICES
+		
+		
+		
 				
-				var ct1 = Math.cos(theta);
-				var st1 = Math.sin(theta);
+		
+		var theta=0;
+			var ct = Math.cos(0.025);
+			var st = Math.sin(0.025);
+				var rotT=new THREE.Matrix4();
+				rotT.set (ct, 0, st, 0,
+						  0, 1, 0, 0,
+						  -st, 0, ct, 0,
+						  0, 0, 0, 1);
 				
-				var r1=new THREE.Matrix4();
-				r1.set( 	1,  0,  0, 0,
-					0, ct1,-st1, 0, 
-					0, st1, ct1, 0,
-					0,  0,  0, 1 );
-				//cilindro2.matrix.multiply(r1);
-		  
-		  
-		  //AGREGAR A LA ESCENA
-			scene.add( cilindro );
-			scene.add( cilindro2 );
-		  
-		  camera.position.x = 50;
-		camera.position.y = 50;
-        camera.position.z = 70;
-        camera.lookAt( -1, -1, -1 );
-        renderer.render( scene, camera );
-}		  
-
-
-	function animate() {
-        render();
-        requestAnimationFrame( animate );
-    }
-	
-	function render(){
-        var dtime = Date.now()-startTime;
-		
-	
-		  
-		  
-		  
-			// Matrices
-		  //ROTACIONES
-		
-		var cs = Math.cos(sigma);
-		var ct2 = Math.cos(-theta);
-		var st2 = Math.sin(-theta);
-		var ss = Math.sin(sigma);
-		var r = new THREE.Matrix4();
-		var r11 = new THREE.Matrix4();
-		var r2 = new THREE.Matrix4();
-
-		//MATRIZ DE ROTACI”N EN EJE Y
-		r.set( 	   cs,  0, ss, 0,
-					0,  1,  0, 0, 
-				  -ss,  0, cs, 0,
-					0,  0,  0, 1 );	
-		//MATRICES DE ROTACI”N EN EJE LOCAL DE PIERNAS	
-		
-		
-		r11.set( 	1,  0,  0, 0,
-					0, ct1,-st1, 0, 
-					0, st1, ct1, 0,
-					0,  0,  0, 1 );
-		
-		r2.set( 	1,  0,  0, 0,
-					0, ct2,-st2, 0, 
-					0, st2, ct2, 0,
-					0,  0,  0, 1 );							
-		
-		//ROTACION EN UN EJE PARALELO
+				cilindro2.applyMatrix(rotT);
+				cilindro2.matrix.multiply(rotT);
+				
 		var tempMatrix = new THREE.Matrix4();
 		tempMatrix.copyPosition( cilindro2.matrix );
 		cilindro2.applyMatrix( new THREE.Matrix4().getInverse(tempMatrix) );
+		
 		cilindro2.applyMatrix( tempMatrix );
-
 		
+		//scene.add(cilindro2);
 		
-		
-        camera.position.x = 25*Math.cos(dtime/10000);
-		camera.position.y=50;
-        camera.position.z = 25*Math.sin(dtime/10000);
+        camera.position.x = 50//*Math.cos(dtime/10000);
+		camera.position.y=20;
+        camera.position.z = 50//*Math.sin(dtime/10000);
         camera.lookAt( -1, -1, -1 );
         renderer.render( scene, camera );
     }
