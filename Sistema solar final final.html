@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sistema Solar</title>
+        <style>
+            html, body { margin: 0; padding: 0; overflow: hidden; }
+            #info {
+                position: absolute;
+                padding: 10px;
+                width: 100%;
+                text-align: center;
+                color: #FFFFFF;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="info">PERSONAJE<br/>
+            Usar flecha arriba y abajo para trasladar.<br/>
+            Usar flechas laterales para rotar.<br/>
+        </div>
+    <script src="js/three.min.js"></script>
+    <script>
+		var scene, aspect, camera, camera2, camera3,camera4, renderer,renderer2,renderer3,renderer4;
+		var lunax,lunay,lunaz;
+		var tierrax,tierray,tierraz;
+		var mercurio, venus, luna,tierra,marte,jupiter,saturno,urano,neptuno,pluton;
+		var startTime = Date.now();
+		
+		
+				
+		var upArrow = false;
+		var downArrow = false;
+		var leftArrow = false;
+		var rightArrow = false;
+		var scaleUp = false;
+		var scaleDown = false;
+		var xAxis = true;
+		var yAxis = false;
+		var zAxis = false;
+		
+		var thetaSum=0;
+		var positivo=false;
+		
+		init();
+		animate();
+	
+		function init(){
+			scene = new THREE.Scene();
+			aspect = window.innerWidth / window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 45, aspect, 0.1, 1000);
+			camera2 = new THREE.PerspectiveCamera( 45, aspect, 0.1, 1000);
+			camera3 = new THREE.PerspectiveCamera( 45, aspect, 0.1, 1000);
+			camera4 = new THREE.PerspectiveCamera( 45, aspect, 0.1, 1000);
+			
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth/3, window.innerHeight/2 );
+			document.body.appendChild( renderer.domElement );
+			
+			renderer2 = new THREE.WebGLRenderer( { antialias: false } );
+	renderer2.setSize( window.innerWidth /3, window.innerHeight / 2 );
+	document.body.appendChild( renderer2.domElement );
+	
+	renderer3 = new THREE.WebGLRenderer( { antialias: false } );
+	renderer3.setSize( window.innerWidth/3, window.innerHeight / 2 );
+	document.body.appendChild( renderer3.domElement );
+	
+		renderer4 = new THREE.WebGLRenderer( { antialias: false } );
+	renderer4.setSize( window.innerWidth, window.innerHeight / 2 );
+	document.body.appendChild( renderer4.domElement );
+				  			
+			//EVENTOS DE TECLADO
+			
+			var onKeyDown = function ( event ) {
+				switch ( event.keyCode ) {
+					case 38: // TRASLADAR ADELANTE
+						upArrow = true;
+						break;
+					case 40: // TRASLADAR ATRÁS
+						downArrow = true;
+						break;
+					case 83: // ESCALA AGRANDAR
+						scaleUp = true;
+						break;
+					case 87: // ESCALA DISMINUIR
+						scaleDown = true;
+						break;
+					case 37: // ROTAR CW
+						leftArrow = true;
+						break;
+					case 39: // ROTAR CCW
+						rightArrow = true;
+						break;
+					case 88: // SELECCIONAR EJE X DE ROTACION
+						yAxis = false;
+						zAxis = false;
+						xAxis = true;
+						break;
+					case 89: // SELECCIONAR EJE Y DE ROTACION
+						xAxis = false;
+						zAxis = false;
+						yAxis = true;
+						break;
+					case 90: // SELECCIONAR EJE Z DE 
+						xAxis = false;
+						yAxis = false;
+						zAxis = true;
+						break;
+				}
+			};	  
+		  			
+			var onKeyUp = function ( event ) {
+				switch ( event.keyCode ) {
+					case 38: // TRASLADAR
+						upArrow = false;
+						break;
+					case 40: // TRASLADAR
+						downArrow = false;
+						break;
+					case 37: // ROTAR CW
+						leftArrow = false;
+						break;
+					case 39: // ROTAR CCW
+						rightArrow = false;
+						break;
+					case 83: // ESCALA AGRANDAR
+						scaleUp = false;
+						break;
+					case 87: // ESCALA DISMINUIR
+						scaleDown = false;
+						break;
+				}
+			};	  	
+			
+			document.addEventListener( 'keydown', onKeyDown, false );
+			document.addEventListener( 'keyup', onKeyUp, false );
+			
+			//ELEMENTOS DE ESCENA
+							  
+			var size = 10;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+			var color1 = new THREE.Color( 0xFFFFFF );
+		  	var color2 = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA0000 );
+		  	var colorG = new THREE.Color( 0x00AA00 );
+		  	var colorB = new THREE.Color( 0x0000AA );
+			var colorRd = new THREE.Color( 0xAA6666 );
+		  	var colorGd = new THREE.Color( 0x66AA66 );
+		  	var colorBd = new THREE.Color( 0x6666AA );
+		  
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper1 = new THREE.AxesHelper( size/10 );
+			var axesHelper2 = new THREE.AxesHelper( size/10 );
+			var axesHelper3 = new THREE.AxesHelper( size/10 );
+		  	var gridHelperXY = new THREE.GridHelper( size, divisions, color1, color1);
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color2, color2 );
+		  	var gridHelperYZ = new THREE.GridHelper( size, divisions, color2, color2 );
+            
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            gridHelperXY.rotateOnWorldAxis ( x, THREE.Math.degToRad(90) );
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+            gridHelperYZ.rotateOnWorldAxis ( z, THREE.Math.degToRad(90) );
+            
+            //CREAR LAS FLECHAS QUE INDICAN LOS EJES DE COORDENADAS 3D
+            var arrowX = new THREE.ArrowHelper( x, origin, arrowSize, colorR );
+            var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
+            var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
+			
+			//CREAR LAS GEOMETRÍAS
+			geometry1 = new THREE.BoxGeometry( 1, 1, 1 );
+			geometry2 = new THREE.CylinderGeometry( .5, .5, 1, 32 );
+		    var geometrysol = new THREE.SphereGeometry( 12, 40, 32 );
+			var geometrymercurio = new THREE.SphereGeometry( 1.3, 40, 32 );
+			var geometryvenus = new THREE.SphereGeometry( 2, 40, 32 );
+			var geometrytierra = new THREE.SphereGeometry( 3, 40, 32 );
+			var geometrymarte = new THREE.SphereGeometry( 2.4, 40, 32 );
+			var geometryjupiter = new THREE.SphereGeometry( 6, 40, 32 );
+			var geometrysaturno = new THREE.SphereGeometry( 5, 40, 32 );
+			var geometryurano = new THREE.SphereGeometry( 4, 40, 32 );
+			var geometryneptuno = new THREE.SphereGeometry( 3, 40, 32 );
+			var geometrypluton = new THREE.SphereGeometry( 1.5, 40, 32 );
+			var geometryluna = new THREE.SphereGeometry( 1, 40, 32 );
+			
+			
+			
+			var elanillodesaturnogeometry = new THREE.RingGeometry( 6, 8, 32 );
+            var elanillodesaturno = new THREE.Mesh( elanillodesaturnogeometry, materialanillo );
+            elanillodesaturno.rotation.x = -Math.PI / 2;
+			elanillodesaturno.position.set( 0, 0, 0);
+			
+			
+		    var materialsol = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+				var materialmercurio = new THREE.MeshBasicMaterial( {color: 0xffd053} );
+				var materialvenus = new THREE.MeshBasicMaterial( {color: 0xd28a23} );
+				var materialtierra = new THREE.MeshBasicMaterial( {color: 0x5555ff} );
+				var materialmarte = new THREE.MeshBasicMaterial( {color: 0xea0000} );
+				var materialjupiter = new THREE.MeshBasicMaterial( {color: 0xffcf69} );
+				var materialsaturno = new THREE.MeshBasicMaterial( {color: 0xf1dea5} );
+				var materialurano = new THREE.MeshBasicMaterial( {color: 0xa5d9de} );
+					var materialneptuno = new THREE.MeshBasicMaterial( {color: 0x6e7dd5} );
+				var materialpluton = new THREE.MeshBasicMaterial( {color: 0xa8aecf} );
+				var materialluna = new THREE.MeshBasicMaterial( {color: 0xf5f5f5} );
+				
+            var sol = new THREE.Mesh( geometrysol, materialsol );
+             				
+					mercurio = new THREE.Mesh( geometrymercurio, materialmercurio );
+					venus = new THREE.Mesh( geometryvenus, materialvenus );
+										
+             tierra = new THREE.Mesh( geometrytierra, materialtierra );
+			marte = new THREE.Mesh( geometrymarte, materialmarte );
+			jupiter = new THREE.Mesh( geometryjupiter, materialjupiter );
+			saturno = new THREE.Mesh( geometrysaturno, materialsaturno );
+			urano = new THREE.Mesh( geometryurano, materialurano );
+			neptuno = new THREE.Mesh( geometryneptuno, materialneptuno );
+			pluton = new THREE.Mesh( geometrypluton, materialpluton );
+			
+            luna = new THREE.Mesh( geometryluna, materialluna );
+						
+			tierrax=35.1;
+			 tierray = tierraz=0;
+			 mercurio.position.set( 21.1, 0, 0 );
+			 venus.position.set( -28.1, 0, 0 );
+			tierra.position.set( tierrax, 0, 0 );
+				luna.position.set( tierrax-29, 0,0);
+			marte.position.set( 0, 0, -42.1 );
+			jupiter.position.set( 50.1, 0,0 );
+			saturno.position.set( 0, 0, 59.1 );
+			urano.position.set( 0, 0, 70.1 );
+			neptuno.position.set( -79.1, 0, 0 );
+			pluton.position.set( 87.1, 0, 0 );
+			
+			
+			
+			
+			var materialanillo = new THREE.MeshBasicMaterial( { color: 0xffffff, side: THREE.DoubleSide } );
+			
+			var anillolunageometry = new THREE.RingGeometry( 6, 6.2, 32 );
+            var anilloluna = new THREE.Mesh( anillolunageometry, materialanillo );
+            anilloluna.rotation.x = -Math.PI / 4;
+			anilloluna.position.set( tierrax-35, tierray, tierraz);
+			
+			var anillomercuriogeometry = new THREE.RingGeometry( 21, 21.2, 32 );
+            var anillomercurio = new THREE.Mesh( anillomercuriogeometry, materialanillo );
+            anillomercurio.rotation.x = Math.PI / 2;
+			
+			var anillovenusgeometry = new THREE.RingGeometry( 28, 28.2, 32 );
+            var anillovenus = new THREE.Mesh( anillovenusgeometry, materialanillo );
+           anillovenus.rotation.x = Math.PI / 2;
+		   
+		   var anillotierrageometry = new THREE.RingGeometry( 35, 35.2, 32 );
+            var anillotierra = new THREE.Mesh( anillotierrageometry, materialanillo );
+           anillotierra.rotation.x = Math.PI / 2;
+		   
+		   var anillomartegeometry = new THREE.RingGeometry( 42, 42.2, 32 );
+            var anillomarte = new THREE.Mesh( anillomartegeometry, materialanillo );
+           anillomarte.rotation.x = Math.PI / 2;
+		   
+		      var anillojupitergeometry = new THREE.RingGeometry( 50, 50.2, 32 );
+            var anillojupiter = new THREE.Mesh( anillojupitergeometry, materialanillo );
+           anillojupiter.rotation.x = Math.PI / 2;
+		   
+		      var anillosaturnogeometry = new THREE.RingGeometry( 59, 59.2, 32 );
+            var anillosaturno = new THREE.Mesh( anillosaturnogeometry, materialanillo );
+           anillosaturno.rotation.x = Math.PI / 2;
+		   
+		   
+		   
+		      var anillouranogeometry = new THREE.RingGeometry( 70, 70.2, 32 );
+            var anillourano = new THREE.Mesh( anillouranogeometry, materialanillo );
+           anillourano.rotation.x = Math.PI / 2;
+		   
+		       var anilloneptunogeometry = new THREE.RingGeometry( 79, 79.2, 32 );
+            var anilloneptuno = new THREE.Mesh( anilloneptunogeometry, materialanillo );
+           anilloneptuno.rotation.x = Math.PI / 2;
+		   
+		      var anilloplutongeometry = new THREE.RingGeometry( 87, 87.2, 32 );
+            var anillopluton = new THREE.Mesh( anilloplutongeometry, materialanillo );
+           anillopluton.rotation.x = Math.PI / 2;
+		   
+		   
+		   
+			
+			tierra.add(anilloluna);
+			tierra.add(luna);
+			saturno.add(elanillodesaturno);
+							
+		  	//AGREGAR A LA ESCENA
+           // scene.add( gridHelperXZ );
+		  	scene.add( arrowX );	
+		  	scene.add( arrowY );	
+		  	scene.add( arrowZ );	
+			scene.add( sol );
+			scene.add( mercurio);
+			scene.add( venus);
+			scene.add( tierra);
+			scene.add( marte);
+			scene.add( jupiter);
+			scene.add( saturno);
+			scene.add( urano);
+			scene.add( neptuno);
+			scene.add( pluton);
+			
+			
+			scene.add( anillomercurio);
+	scene.add( anillovenus);
+	scene.add( anillotierra);
+	scene.add( anillomarte);
+	scene.add( anillojupiter);
+	scene.add( anillosaturno);
+	scene.add( anillourano);
+	scene.add( anilloneptuno);
+	scene.add( anillopluton);
+			
+			//MOVER LA CAMARA
+		
+			camera.position.x = 110;
+			camera.position.y = 55;	 
+		  	camera.position.z = 110;	
+		
+		     camera2.position.x = 0;
+			camera2.position.y = 265;	 
+		  	camera2.position.z = 0;	
+			
+			 camera3.position.x = 265;
+			camera3.position.y = 0;	 
+		  	camera3.position.z = 0;	
+		
+				camera4.position.x = 110;
+			camera4.position.y = 55;	 
+		  	camera4.position.z = 110;	
+					
+		  	camera.lookAt( origin );
+			camera2.lookAt( origin );
+			camera3.lookAt( origin );
+			camera4.lookAt( origin );
+			
+			renderer.render( scene, camera );
+			 renderer2.render( scene, camera2 );
+		  renderer3.render( scene, camera3 );
+		  renderer4.render( scene, camera4 );
+			}
+  
+ 
+ 
+    function animate() {
+		render();
+
+		var cs = Math.cos(0.025);
+		var ss = Math.sin(0.025);
+	
+
+		//MATRIZ DE ROTACIÓN EN EJE Y
+		var r= new THREE.Matrix4();
+		r.set( 	   cs,  0, ss, 0,
+					0,  1,  0, 0, 
+				  -ss,  0, cs, 0,
+					0,  0,  0, 1 );	
+	
+			var r11= new THREE.Matrix4();
+		r11.set( 	cs,  -ss, 0, 0,
+					ss, cs,0, 0, 
+					0, 0,1, 0,
+					0,  0,  0, 1 );	
+		
+		
+		var cs2 = Math.cos(0.045);
+		var ss2 = Math.sin(0.045);
+			var r12= new THREE.Matrix4();
+			r12.set( 	   cs2,  0, ss2, 0,
+					0,  1,  0, 0, 
+				  -ss2,  0, cs2, 0,
+					0,  0,  0, 1 );	
+				
+					
+					
+						var cs3 = Math.cos(0.035);
+		var ss3 = Math.sin(0.035);
+			var r2= new THREE.Matrix4();
+			r2.set( 	   cs3,  0, ss3, 0,
+					0,  1,  0, 0, 
+				  -ss3,  0, cs3, 0,
+					0,  0,  0, 1 );	
+					
+					
+					/*
+		tierra.position.x = (Math.sin((Date.now())*0.001) *200);
+   		tierra.position.z = (Math.cos((Date.now())*0.001) *200);
+		*/
+		mercurio.applyMatrix(r12);
+		mercurio.matrix.multiply(r12);
+		
+		venus.applyMatrix(r2);
+		venus.matrix.multiply(r2);
+		
+		tierra.applyMatrix(r);
+		tierra.matrix.multiply(r);
+				
+				
+		luna.applyMatrix(r11);
+		luna.matrix.multiply(r11);
+		luna.applyMatrix(r);
+		luna.matrix.multiply(r);	
+		
+		
+		marte.applyMatrix(r2);
+		marte.matrix.multiply(r2);
+		
+		jupiter.applyMatrix(r12);
+		jupiter.matrix.multiply(r12);
+		
+		saturno.applyMatrix(r);
+		saturno.matrix.multiply(r);
+		
+		neptuno.applyMatrix(r2);
+		neptuno.matrix.multiply(r2);
+		
+		urano.applyMatrix(r2);
+		urano.matrix.multiply(r2);
+		
+		pluton.applyMatrix(r12);
+		pluton.matrix.multiply(r12);
+		
+        requestAnimationFrame( animate );
+    }
+  	
+    function render(){
+        		
+			
+        camera.lookAt( 0, 0, 0 );
+        renderer.render( scene, camera );
+		 renderer2.render( scene, camera2 );
+		  renderer3.render( scene, camera3 );
+		  renderer4.render( scene, camera4 );
+    }
+    </script>
+  </body>
+</html>
