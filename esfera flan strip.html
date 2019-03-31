@@ -15,7 +15,7 @@
 		var fan;
 		var strip;
 		var tapa;
-		var AAA;
+		var AAA, AA;
 		
 		class TRIANGLE_FAN{	
 		  constructor( Geometria ){
@@ -190,7 +190,7 @@
 				punto10.z = 1*punto9.z;
 				
 				
-				geometria.vertices.push( punto6 );
+				geometria6.vertices.push( punto6 );
 				
 				geometria7.vertices.push( punto6 );
 				geometria7.vertices.push( punto7 );
@@ -225,7 +225,7 @@
 			strip = new TRIANGLE_STRIP(geometria5);
 			strip.draw();
 			
-			fan = new TRIANGLE_FAN(geometria);	
+			fan = new TRIANGLE_FAN(geometria6);	
 			fan.draw();
 			
 			strip = new TRIANGLE_STRIP(geometria7);
@@ -247,7 +247,6 @@
 			
 			//CREAR LOS OBJETOS
 			var cono = new THREE.Line( geometria, matLinea );
-			cono2 = cono.clone();
 			var tubo = new THREE.Line( geometria2, matLinea );
 			var tubo2 = new THREE.Line( geometria3, matLinea );
 			var tubo3 = new THREE.Line( geometria4, matLinea );
@@ -271,19 +270,38 @@
 			scene.add( tubo3 );
 			scene.add( tubo4 );
 			
+			scene.add( tubo7 );
+			scene.add( tubo5 );
+			scene.add( tubo8 );
+			scene.add( tubo9 );
+			scene.add( tubo6 );
+			
 			//cono2.applyMatrix( new THREE.Matrix4().makeTranslation(0,-1.2,0) );
 			
 			//scene.add( cono2 );
 			
-			AAA.add( tubo5);
+			/*geometria6.applyMatrix( new THREE.Matrix4().makeTranslation(0,-1.2,0) );
+			geometria6.rotateZ(Math.PI);*/
+			
+			
+			geometria10.applyMatrix( new THREE.Matrix4().makeTranslation(0,1.2,0) );
+			geometria10.rotateZ(Math.PI);
+			
+			geometria8.applyMatrix( new THREE.Matrix4().makeTranslation(0,1.2,0) );
+			geometria8.rotateZ(Math.PI);
+			
+			/*geometria9.applyMatrix( new THREE.Matrix4().makeTranslation(0,1.2,0) );
+			geometria9.rotateZ(Math.PI);*/
+			
+			/*AAA.add( geometria10);
 			//AAA.add( tubo6);
-			AAA.add( tubo7 );
-			AAA.add( tubo8 );
-			AAA.add( tubo9 );
-			AAA.add( cono2 );
+			AAA.add( geometria7 );
+			AAA.add( geometria8 );
+			AAA.add( geometria9 );
+			AAA.add( cono2 );*/
 			
 			
-			AAA.applyMatrix( new THREE.Matrix4().makeTranslation(0,-1.2,0) );
+			AAA.applyMatrix( new THREE.Matrix4().makeTranslation(0,1.2,0) );
 			AAA.rotateZ(Math.PI);
 			
 			scene.add( AAA );
