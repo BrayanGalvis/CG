@@ -1,7 +1,7 @@
  <!DOCTYPE html>
 <html>
   <head>
-    <title>Ej: Esfera</title>
+    <title>Toroide</title>
     <style>
       html, body { margin: 0; padding: 0; overflow: hidden; }
     </style>
@@ -102,6 +102,9 @@
 			var punto0 = new THREE.Vector3(0,2,0);			
             var geometria = new THREE.Geometry();
 			var geometria2 = new THREE.Geometry();
+			var geometria3 = new THREE.Geometry();
+			var geometria4 = new THREE.Geometry();
+			var geometria5 = new THREE.Geometry();
 			var radio = 1.0;
 			var res = 10.0;
 			geometria.vertices.push( punto0 );
@@ -109,28 +112,58 @@
 				for( var j = 0; j <= res; j++){
 					var punto = new THREE.Vector3();
 					var punto2 = new THREE.Vector3();
+					var punto3 = new THREE.Vector3();
+					var punto4 = new THREE.Vector3();
+					var punto5 = new THREE.Vector3();
+					
 					punto.x = radio * Math.cos( ( 2 * Math.PI * i )/ res );
 					punto.y = 1;
 					punto.z = radio * Math.sin( ( 2 * Math.PI * i )/ res );
 				
-					
-					
 					punto2.x = punto.x;
 					punto2.y =0;
 					punto2.z = punto.z;
 				
+					punto3.x = 0.15+punto2.x;
+					punto3.y = -0.8+punto2.y;
+					punto3.z = punto.z;
 					
+					punto4.x = 0.45+punto3.x;
+					punto4.y = -1.6+punto3.y;
+					punto4.z = punto3.z;
+					
+					punto5.x = 0.825+punto2.x;
+					punto5.y = -2.2+punto2.y;
+					punto5.z = punto2.z;
 					
 					geometria.vertices.push( punto );
 					
 					geometria2.vertices.push( punto );
 					geometria2.vertices.push( punto2 );	
-
 					
-				
+					geometria3.vertices.push( punto2 );
+					geometria3.vertices.push( punto3 );	
+					
+					geometria4.vertices.push( punto3 );
+					geometria4.vertices.push( punto4 );	
+					
+					geometria4.vertices.push( punto4 );
+					geometria4.vertices.push( punto5 );	
+					
+					
+					
+					/*geometria3.rotateZ(Math.PI/18);
+					geometria3.applyMatrix( new THREE.Matrix4().makeTranslation( 0.15,-0.8,0) );
+					
+					geometria4.rotateZ(Math.PI/9);
+					geometria4.applyMatrix( new THREE.Matrix4().makeTranslation( 0.45,-1.6,0) );
+					
+					geometria5.rotateZ(Math.PI/6);
+					geometria5.applyMatrix( new THREE.Matrix4().makeTranslation( 0.825,-2.2,0) );*/
+			
 				}
 			}
-			var geometria3 = geometria2.clone();
+			
 			fan = new TRIANGLE_FAN(geometria);	
 			fan.draw();
 			
@@ -140,6 +173,12 @@
 			strip = new TRIANGLE_STRIP(geometria3);
 			strip.draw();
 			
+			strip = new TRIANGLE_STRIP(geometria4);
+			strip.draw();
+			
+			strip = new TRIANGLE_STRIP(geometria5);
+			strip.draw();
+			
 			//CREAR LOS MATERIALES
             var matLinea = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
 			
@@ -147,6 +186,8 @@
 			var cono = new THREE.Line( geometria, matLinea );
 			var tubo = new THREE.Line( geometria2, matLinea );
 			var tubo2 = new THREE.Line(geometria3, matLinea);
+			var tubo3 = new THREE.Line(geometria4, matLinea);
+			var tubo4 = new THREE.Line(geometria5, matLinea);
 		  	//AGREGAR A LA ESCENA
 		  	//scene.add( gridHelperXY );
             scene.add( gridHelperXZ );
@@ -157,10 +198,11 @@
 			scene.add( tubo );
 			
 			
-			geometria3.rotateZ(Math.PI/18);
-			geometria3.applyMatrix( new THREE.Matrix4().makeTranslation( 0.15,-0.8,0) );
+			
 			
 			scene.add(tubo2);
+			scene.add(tubo3);
+			scene.add(tubo4);
 			
 			camera.position.x = 10;
 			camera.position.y = 8;	 
