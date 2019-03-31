@@ -8,43 +8,24 @@
   </head>
   <body>
     <script src="js/three.js"></script>
-	<script src="js/controls/OrbitControls.js"></script>
     <script>
-		var scene, aspect, camera, renderer, controls;
+		var scene, aspect, camera, renderer;
 		var startTime = Date.now();
 		var fan;
-		var strip;
-		var tapa;
 		
-		class TRIANGLE_FAN{	
+		class TRIANGLE_FAN{		
 		  constructor( Geometria ){
 		    this.geometria = Geometria;
 			console.log(this.geometria);
 		  }  
-		  draw(){			
+		  drawFan(){			
 			for( var i=2; i<this.geometria.vertices.length; i++ ){
 			  this.geometria.faces.push( new THREE.Face3(0,i-1,i) );
 			}
 			this.geometria.computeFaceNormals();
-			var materialFan = new THREE.MeshBasicMaterial( { color: 0x3333DD, side:THREE.DoubleSide } );
-			var fan = new THREE.Mesh( this.geometria, materialFan );
-			scene.add( fan );
-		  }
-		}
-		
-		class TRIANGLE_STRIP{	
-		  constructor( Geometria ){
-		    this.geometria = Geometria;
-			console.log(this.geometria);
-		  }  
-		  draw(){			
-			for( var i=2; i<this.geometria.vertices.length; i++ ){
-			  this.geometria.faces.push( new THREE.Face3(i-2,i-1,i) );
-			}
-			this.geometria.computeFaceNormals();
-			var materialStrip = new THREE.MeshBasicMaterial( { color: 0x3333DD, side:THREE.DoubleSide } );
-			var strip = new THREE.Mesh( this.geometria, materialStrip );
-			scene.add( strip );
+			var materialFan = new THREE.MeshBasicMaterial( { color: 0x333333, side:THREE.DoubleSide } );
+			var esferaFan = new THREE.Mesh( this.geometria, materialFan );
+			scene.add( esferaFan );
 		  }
 		}
 		
@@ -58,8 +39,7 @@
 			renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
-			controls = new THREE.OrbitControls( camera, renderer.domElement );
-            				  
+				  
 			var size = 10;
 			var arrowSize = 1;
 			var divisions = size;
@@ -89,91 +69,55 @@
             var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
             var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
 			
-			//CREAR ILUMINACIÓN
-            var ambient = new THREE.AmbientLight( 0xffffff, 2 );
-            scene.add( ambient );
-            
-            var pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
-            pointLight.position.set( 5, 5, -5 );
-            scene.add( pointLight );
-			
 			//CREAR LAS GEOMETRÍAS
             //Punto
-			var punto0 = new THREE.Vector3(0,1,0);			
-            var geometria = new THREE.Geometry();
-			var geometria2 = new THREE.Geometry();
-			var geometria3 = new THREE.Geometry();
-			var radio = 1.0;
-			var res = 10.0;
-			geometria.vertices.push( punto0 );
-            for( var i = 0; i <= res; i++){
-                var punto = new THREE.Vector3();
-				var punto2 = new THREE.Vector3();
-				var punto3 = new THREE.Vector3();
-
-				punto.x = radio * Math.cos( ( 2 * Math.PI * i )/ res );
-                punto.y = 0.7
-                punto.z = radio * Math.sin( ( 2 * Math.PI * i )/ res );
-				
-				
-				punto2.x = 1.5*punto.x;
-				punto2.y = 0.4;
-				punto2.z = 1.5* punto.z;
-				
-				punto3.x = 1.2*punto2.x;
-				punto3.y = 0.1;
-				punto3.z = 1.2*punto2.z;
-				
-				
-				geometria.vertices.push( punto );
-				
-				geometria2.vertices.push( punto );
-				geometria2.vertices.push( punto2 );
-				
-				geometria3.vertices.push( punto2 );
-				geometria3.vertices.push( punto3 );
+            var geoEsfera = new THREE.Geometry();
+            var zTemp = 0;
+            var res = 200.0;
+            for( var i = 0; i < res; i++){
+                for( var j = 0; j < res; j++){
+                    var punto = new THREE.Vector3();
+                    punto.x = 5 * Math.cos( ( j * 4 * Math.PI )/res) * Math.sin( ( i * Math.PI  )/res) ;
+                    punto.y = 5 * Math.sin( ( j * 20 * Math.PI )/res) * Math.sin( ( i * Math.PI)/res) ;
+                    punto.z = 5 * Math.cos( ( i * Math.PI )/res) ;
+                    geoEsfera.vertices.push( punto );
+                }
             }
 			
-			fan = new TRIANGLE_FAN(geometria);	
-			fan.draw();
-			
-			strip = new TRIANGLE_STRIP(geometria2);
-			strip.draw();
-			
-			strip = new TRIANGLE_STRIP(geometria3);
-			strip.draw();
+			fan = new TRIANGLE_FAN(geoEsfera);	
+			fan.drawFan();
 			
 			//CREAR LOS MATERIALES
             var matLinea = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
 			
 			//CREAR LOS OBJETOS
-			var cono = new THREE.Line( geometria, matLinea );
-			var tubo = new THREE.Line( geometria2, matLinea );
-			var tubo2 = new THREE.Line( geometria3, matLinea );
+			var esfera = new THREE.Line( geoEsfera, matLinea );
+		  
 		  	//AGREGAR A LA ESCENA
 		  	//scene.add( gridHelperXY );
             scene.add( gridHelperXZ );
 		  	scene.add( arrowX );	
 		  	scene.add( arrowY );	
 		  	scene.add( arrowZ );	
-			scene.add( cono );
-			scene.add( tubo );
-			scene.add( tubo2 );
+			scene.add( esfera );
 			
-			camera.position.x = 3;
-			camera.position.y = 4;	 
-		  	camera.position.z =  4;
+			camera.position.x = 5;
+			camera.position.y = 10;	 
+		  	camera.position.z =  10;
 			
 		  	camera.lookAt( origin );
 			}
     
     function animate() {
         render();
-		controls.update(); // required if controls.enableDamping = true, or if controls.autoRotate = true
         requestAnimationFrame( animate );
     }
     
     function render(){
+        var dtime = Date.now()-startTime;
+        camera.position.x = 10*Math.cos(dtime/10000);
+        camera.position.z = 10*Math.sin(dtime/10000);
+        camera.lookAt( 0, 0, 0 );
         renderer.render( scene, camera );
     }
     </script>
