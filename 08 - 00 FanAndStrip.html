@@ -15,6 +15,7 @@
 		var fan;
 		var strip;
 		var tapa;
+		var AAA;
 		
 		class TRIANGLE_FAN{	
 		  constructor( Geometria ){
@@ -99,17 +100,31 @@
 			
 			//CREAR LAS GEOMETRÍAS
             //Punto
-			var punto0 = new THREE.Vector3(0,1,0);			
+			var punto0 = new THREE.Vector3(0,1,0);
             var geometria = new THREE.Geometry();
 			var geometria2 = new THREE.Geometry();
 			var geometria3 = new THREE.Geometry();
+			var geometria4 = new THREE.Geometry();
+			var geometria5 = new THREE.Geometry();
+			
+			
 			var radio = 1.0;
 			var res = 10.0;
 			geometria.vertices.push( punto0 );
+			
+			var geometria6 = new THREE.Geometry();
+			var geometria7 = new THREE.Geometry();
+			var geometria8 = new THREE.Geometry();
+			var geometria9 = new THREE.Geometry();
+			var geometria10 = new THREE.Geometry();
+			geometria6.vertices.push( punto0 );
+			
             for( var i = 0; i <= res; i++){
                 var punto = new THREE.Vector3();
 				var punto2 = new THREE.Vector3();
 				var punto3 = new THREE.Vector3();
+				var punto4 = new THREE.Vector3();
+				var punto5 = new THREE.Vector3();
 
 				punto.x = radio * Math.cos( ( 2 * Math.PI * i )/ res );
                 punto.y = 0.7
@@ -124,6 +139,13 @@
 				punto3.y = 0.1;
 				punto3.z = 1.2*punto2.z;
 				
+				punto4.x = 1.1*punto3.x;
+				punto4.y = -0.2;
+				punto4.z = 1.1*punto3.z;
+				
+				punto5.x = 1*punto4.x;
+				punto5.y = -0.7;
+				punto5.z = 1*punto4.z;
 				
 				geometria.vertices.push( punto );
 				
@@ -132,7 +154,61 @@
 				
 				geometria3.vertices.push( punto2 );
 				geometria3.vertices.push( punto3 );
+				
+				geometria4.vertices.push( punto3 );
+				geometria4.vertices.push( punto4 );
+				
+				geometria5.vertices.push( punto4 );
+				geometria5.vertices.push( punto5 );
+				
+				
+				var punto6 = new THREE.Vector3();
+				var punto7 = new THREE.Vector3();
+				var punto8 = new THREE.Vector3();
+				var punto9 = new THREE.Vector3();
+				var punto10 = new THREE.Vector3();
+
+				punto6.x = radio * Math.cos( ( 2 * Math.PI * i )/ res );
+                punto6.y = 0.7
+                punto6.z = radio * Math.sin( ( 2 * Math.PI * i )/ res );
+				
+				
+				punto7.x = 1.5*punto6.x;
+				punto7.y = 0.4;
+				punto7.z = 1.5* punto6.z;
+				
+				punto8.x = 1.2*punto7.x;
+				punto8.y = 0.1;
+				punto8.z = 1.2*punto7.z;
+				
+				punto9.x = 1.1*punto8.x;
+				punto9.y = -0.2;
+				punto9.z = 1.1*punto8.z;
+				
+				punto10.x = 1*punto9.x;
+				punto10.y = -0.7;
+				punto10.z = 1*punto9.z;
+				
+				
+				geometria.vertices.push( punto6 );
+				
+				geometria7.vertices.push( punto6 );
+				geometria7.vertices.push( punto7 );
+				
+				geometria8.vertices.push( punto7 );
+				geometria8.vertices.push( punto8 );
+				
+				geometria9.vertices.push( punto8 );
+				geometria9.vertices.push( punto9 );
+				
+				geometria10.vertices.push( punto9 );
+				geometria10.vertices.push( punto10 );
             }
+			
+			////////
+			
+			
+			
 			
 			fan = new TRIANGLE_FAN(geometria);	
 			fan.draw();
@@ -143,13 +219,46 @@
 			strip = new TRIANGLE_STRIP(geometria3);
 			strip.draw();
 			
+			strip = new TRIANGLE_STRIP(geometria4);
+			strip.draw();
+			
+			strip = new TRIANGLE_STRIP(geometria5);
+			strip.draw();
+			
+			fan = new TRIANGLE_FAN(geometria);	
+			fan.draw();
+			
+			strip = new TRIANGLE_STRIP(geometria7);
+			strip.draw();
+			
+			strip = new TRIANGLE_STRIP(geometria8);
+			strip.draw();
+			
+			strip = new TRIANGLE_STRIP(geometria9);
+			strip.draw();
+			
+			strip = new TRIANGLE_STRIP(geometria10);
+			strip.draw();
+			
 			//CREAR LOS MATERIALES
             var matLinea = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
+			AAA = new THREE.Mesh( geometria, matLinea );
+			var cono2 = new THREE.Mesh( geometria, matLinea );
 			
 			//CREAR LOS OBJETOS
 			var cono = new THREE.Line( geometria, matLinea );
+			cono2 = cono.clone();
 			var tubo = new THREE.Line( geometria2, matLinea );
 			var tubo2 = new THREE.Line( geometria3, matLinea );
+			var tubo3 = new THREE.Line( geometria4, matLinea );
+			var tubo4 = new THREE.Line( geometria5, matLinea );
+			
+			var tubo6 = new THREE.Line( geometria6, matLinea );
+			
+			var tubo7 = new THREE.Line( geometria7, matLinea );
+			var tubo8 = new THREE.Line( geometria8, matLinea );
+			var tubo9 = new THREE.Line( geometria9, matLinea );
+			var tubo5 = new THREE.Line( geometria10, matLinea );
 		  	//AGREGAR A LA ESCENA
 		  	//scene.add( gridHelperXY );
             scene.add( gridHelperXZ );
@@ -159,6 +268,25 @@
 			scene.add( cono );
 			scene.add( tubo );
 			scene.add( tubo2 );
+			scene.add( tubo3 );
+			scene.add( tubo4 );
+			
+			//cono2.applyMatrix( new THREE.Matrix4().makeTranslation(0,-1.2,0) );
+			
+			//scene.add( cono2 );
+			
+			AAA.add( tubo5);
+			//AAA.add( tubo6);
+			AAA.add( tubo7 );
+			AAA.add( tubo8 );
+			AAA.add( tubo9 );
+			AAA.add( cono2 );
+			
+			
+			AAA.applyMatrix( new THREE.Matrix4().makeTranslation(0,-1.2,0) );
+			AAA.rotateZ(Math.PI);
+			
+			scene.add( AAA );
 			
 			camera.position.x = 3;
 			camera.position.y = 4;	 
