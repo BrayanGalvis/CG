@@ -64,7 +64,7 @@
 			var boxGeometry = new THREE.BoxGeometry( 7, 2, 2 );
 			var sphereGeometry = new THREE.SphereGeometry( 2, 32, 32 );
 			
-			var TorusGeometry = new THREE.TorusGeometry( 2, 0.5, 18, 100 );
+			var TorusGeometry = new THREE.TorusGeometry( 2.5, 0.5, 50, 100 );
 			
 			//////////////////////////////////////////
 			
@@ -73,9 +73,16 @@
 			var boxGeometry3 = new THREE.BoxGeometry( 2, 0.5, 4 );		
 			var boxGeometry4 = new THREE.BoxGeometry( 7, 4, 1 );
 			var boxGeometry5 = new THREE.BoxGeometry( 3, 2.5, 7.5 );	
-			var boxGeometry6 = new THREE.BoxGeometry( 3, 2.5, 5.5 );	
+			var boxGeometry6 = new THREE.BoxGeometry( 3, 2.5, 5.5 );
+			var boxGeometry7 = new THREE.BoxGeometry( 3, 2, 1 );	
+			var boxGeometry8 = new THREE.BoxGeometry( 3, 2, 2 );
+			var boxGeometry9 = new THREE.BoxGeometry( 4, 4, 5 );			
 
 			var CylGeo = new THREE.CylinderGeometry( 1, 1, 4, 100 );
+			var CylGeo2 = new THREE.CylinderGeometry( 1.55, 1.55, 4, 100 );
+			var CylGeo3 = new THREE.CylinderGeometry( 2, 2, 4, 100 );
+			var CylGeo4 = new THREE.CylinderGeometry( 0.5, 0.5, 4, 100 );
+			var CylGeo5 = new THREE.CylinderGeometry( 0.5, 0.5, 4, 100 );
 						
 			//////////////////////////////////////////////			
 			//CREAR LOS MATERIALES
@@ -88,6 +95,10 @@
 			
 		
 			boxGeometry4.rotateX(-5*Math.PI/18);
+			CylGeo2.rotateX(Math.PI/2);
+			CylGeo3.rotateX(Math.PI/2);
+			CylGeo4.rotateX(Math.PI/2);
+			CylGeo5.rotateX(Math.PI/2);
 			
 			//CREAR LAS MALLAS
 			var cube = new THREE.Mesh( boxGeometry );
@@ -98,8 +109,15 @@
 			var cube4 = new THREE.Mesh( boxGeometry4 );
 			var cube5 = new THREE.Mesh( boxGeometry5 );
 			var cube6 = new THREE.Mesh( boxGeometry6 );
+			var cube7 = new THREE.Mesh( boxGeometry7 );
+			var cube8 = new THREE.Mesh( boxGeometry8 );
+			var cube9 = new THREE.Mesh( boxGeometry9 );
 			
 			var Cylinder = new THREE.Mesh( CylGeo );
+			var Cylinder2 = new THREE.Mesh( CylGeo2 );
+			var Cylinder3 = new THREE.Mesh( CylGeo3 );
+			var Cylinder4 = new THREE.Mesh( CylGeo4 );
+			var Cylinder5 = new THREE.Mesh( CylGeo5 );
 			
 			sphere.translateX( 0 );
 			sphere.translateY( 0 );
@@ -120,6 +138,29 @@
 			
 			cube6.translateY( 1.75 );
 			cube6.translateZ( 0.25 );
+			
+			cube7.translateY( 3.5 );
+			cube7.translateZ( -4 );
+			
+			cube8.translateY( 5.5 );
+			cube8.translateZ( -3.5 );
+			
+			cube9.translateY( 3.5 );
+			cube9.translateZ( -3.5 );
+			
+			Cylinder2.translateY( 5.25 );
+			Cylinder2.translateZ( -3.5 );
+			
+			Cylinder3.translateY( 5.25 );
+			Cylinder3.translateZ( -3.5 );
+			
+			Cylinder4.translateY( 5.5 );
+			Cylinder4.translateZ( -3.5 );
+			Cylinder4.translateX( -0.65 );
+			
+			Cylinder5.translateY( 5.5 );
+			Cylinder5.translateZ( -3.5 );
+			Cylinder5.translateX( 0.65 );
 			
 			var Torus = new THREE.Mesh( TorusGeometry, TorusMaterial );
 			var Torus2 = new THREE.Mesh( TorusGeometry, TorusMaterial );
@@ -279,12 +320,10 @@
 			//scene.add( cube5 );
 			//scene.add( cube6 );
 			
-			
 			var FF3 = THREE.CSG.fromMesh( F3 );
 			var FF4 = THREE.CSG.fromMesh( F4 );
 			var Res5 = FF3.union( FF4 );
 			var F5 = THREE.CSG.toMesh( Res5 );
-			
 			
 			
 			var FF5 = THREE.CSG.fromMesh( F5 );
@@ -292,11 +331,53 @@
 			var Res6 = FF5.subtract( CylCSG1);
 			var F6 = THREE.CSG.toMesh( Res6 );
 			
-			F6.material = material1;
 			
-			//scene.add( Cylinder );
-			scene.add( F6 );
+			var FF6 = THREE.CSG.fromMesh( F6 );
+			var Cube7CSG = THREE.CSG.fromMesh( cube7 );
+			var Res7 = FF6.union( Cube7CSG);
+			var F7 = THREE.CSG.toMesh( Res7 );
 			
+			
+			var CylCSG2 = THREE.CSG.fromMesh( Cylinder2 );
+			var CylCSG3 = THREE.CSG.fromMesh( Cylinder3 );
+			var Res8 = CylCSG3.subtract( CylCSG2 );
+			var CilCC = THREE.CSG.toMesh( Res8 );
+			
+			var CilCCCSG = THREE.CSG.fromMesh( CilCC);
+			var Cube9CSG = THREE.CSG.fromMesh( cube9 );
+			var Res9 = CilCCCSG.subtract( Cube9CSG );
+			var CilCC2 = THREE.CSG.toMesh( Res9 );
+			
+			/*scene.add( cube8 );
+			scene.add( CilCC2 );*/
+			
+			var Cube10CSG = THREE.CSG.fromMesh( cube8 );
+			var CilCC2CSG = THREE.CSG.fromMesh( CilCC2);
+			var Res10 = Cube10CSG.subtract( CilCC2CSG );
+			var CCCC = THREE.CSG.toMesh( Res10 );
+			
+			var FF7 = THREE.CSG.fromMesh( F7 );
+			var CCCCCSG = THREE.CSG.fromMesh( CCCC );
+			var Res14 = FF7.union( CCCCCSG );
+			var F8 = THREE.CSG.toMesh( Res14 );
+			
+			
+			var FF8 = THREE.CSG.fromMesh( F8 );
+			var CylCSG4 = THREE.CSG.fromMesh( Cylinder4 );
+			var Res15 = FF8.subtract( CylCSG4 );
+			var F9 = THREE.CSG.toMesh( Res15 );
+			
+			//scene.add( Cylinder4 );
+			//scene.add( Cylinder5 );
+			
+			var FF9 = THREE.CSG.fromMesh( F9 );
+			var CylCSG5 = THREE.CSG.fromMesh( Cylinder5 );
+			var Res16 = FF9.subtract( CylCSG5 );
+			var F10 = THREE.CSG.toMesh( Res16 );
+			
+			F10.material = material1;
+			
+			scene.add( F10 );
 
 			camera.position.x = 6;
 			camera.position.y = 5;
