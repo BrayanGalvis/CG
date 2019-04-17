@@ -59,6 +59,10 @@
             var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
             var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
             
+			
+			
+			////////////// B //////////////////////
+			
             var curve1 = new THREE.CubicBezierCurve3(
                 new THREE.Vector3( -5, 0, 0 ),
                 new THREE.Vector3( -4.8, 3, 0 ),
@@ -141,7 +145,39 @@
 			
 			
 			
-
+			/////////////////////// G ///////////////////////////
+			
+			
+			var curve7 = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( 12, 0, 0 ),
+                new THREE.Vector3( 2, -2, 0 ),
+                new THREE.Vector3( 6, 22, 0 ),
+                new THREE.Vector3( 17, 13, 0 )
+            );
+            
+            var curve8 = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( 12, 2, 0 ),
+                new THREE.Vector3( 6, 0, 0 ),
+                new THREE.Vector3( 6, 16, 0 ),
+                new THREE.Vector3( 15.5, 12.5, 0 )
+            );
+			
+			var pointGeometry4 = new THREE.Geometry();
+            for(var i=0; i<20; i++){
+                var point4 = curve7.getPoint( i/20 );
+                pointGeometry4.vertices.push( point4 );
+            }
+            
+            for(var i=0; i<20; i++){
+                var point4 = curve8.getPoint( i/20 );
+                pointGeometry4.vertices.push( point4 );
+            }
+			
+			
+			
+			
+			
+			
             var pointMaterial = new THREE.PointsMaterial( { color: 0x00FF00 } );
             var curvePoints = new THREE.Points( pointGeometry, pointMaterial );
 			
@@ -149,6 +185,8 @@
 			var curvePoints2 = new THREE.Points( pointGeometry2, pointMaterial );
 			
 			var curvePoints3 = new THREE.Points( pointGeometry3, pointMaterial );
+			
+			var curvePoints4 = new THREE.Points( pointGeometry4, pointMaterial );
             
             var material = new THREE.MeshStandardMaterial( { color : 0x00cc00 } );
             material.side = THREE.DoubleSide;
@@ -167,6 +205,11 @@
                 pointGeometry3.faces.push( face6 );
                 var face7 = new THREE.Face3( i+1, i+20, i+21 );
                 pointGeometry3.faces.push( face7 );
+				
+				var face8 = new THREE.Face3( i, i+1, i+20 );
+                pointGeometry4.faces.push( face8 );
+                var face9 = new THREE.Face3( i+1, i+20, i+21 );
+                pointGeometry4.faces.push( face9 );
             }
             pointGeometry.computeFaceNormals();
             //pointGeometry.computeVertexNormals();
@@ -174,6 +217,7 @@
             scene.add( new THREE.Mesh( pointGeometry, material ) );
             scene.add( new THREE.Mesh( pointGeometry2, material ) );
 			scene.add( new THREE.Mesh( pointGeometry3, material ) );
+			scene.add( new THREE.Mesh( pointGeometry4, material ) );
 			
 		  	//AGREGAR A LA ESCENA
             scene.add( gridHelperXZ );
@@ -181,7 +225,7 @@
 		  	scene.add( arrowY );	
 		  	scene.add( arrowZ );
             //scene.add( curvePoints );
-			//scene.add( curvePoints3 );
+			scene.add( curvePoints4 );
 			
 			
 			//MOVER LA CÁMARA
