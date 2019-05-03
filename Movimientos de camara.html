@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Camaras escena</title>
+    <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+   <script src="js/three.min.js"></script>
+    <script src="js/controls/OrbitControls.js"></script>
+    <script>
+		var scene, aspect, camera, renderer, controls;
+		var time=0;
+		var startTime = Date.now();
+		init();
+		animate();
+		function init(){
+			//INICIALIZACIÓN
+	        scene = new THREE.Scene();
+	        aspect = window.innerWidth / window.innerHeight;
+	        camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000);
+	        renderer = new THREE.WebGLRenderer();
+	        renderer.setSize( window.innerWidth, window.innerHeight );
+	        document.body.appendChild( renderer.domElement );
+			controls = new THREE.OrbitControls( camera, renderer.domElement );
+			
+			//ELEMENTOS COMUNES
+			
+			var size = 10;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+		  	var color = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA3333 );
+		  	var colorG = new THREE.Color( 0x33AA33 );
+		  	var colorB = new THREE.Color( 0x333366 );
+			var c1=false; 
+			var c2=false;
+			
+			
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper = new THREE.AxesHelper( size );
+			scene.add( axesHelper );
+			
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color, color );
+			scene.add( gridHelperXZ );
+            
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+
+            //CREAR ILUMINACIÓN
+            var ambient = new THREE.AmbientLight( 0xffffff, 2 );
+            scene.add( ambient );
+			
+            var pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
+            pointLight.position.set( -5, -2, 5 );
+            scene.add( pointLight );
+			
+            var pointLight = new THREE.PointLight( 0xffffff, .5, 100 );
+            pointLight.position.set( 5, -2, -5 );
+            scene.add( pointLight );
+			
+			//CREAR LAS GEOMETRÍAS
+			
+			
+			var spidergeometry = new THREE.BoxGeometry( 1, 2, 1 );
+			var mysteriogeometry = new THREE.BoxGeometry( 2, 3, 2 );
+
+
+					
+			//CREAR LOS MATERIALES
+            var material1 = new THREE.MeshStandardMaterial( { color: colorR, metalness: 0.5, roughness: 0.1 } );
+			var material2 = new THREE.MeshStandardMaterial( { color: colorG, metalness: 0.5, roughness: 0.1, transparent:true, opacity: 0.5  } );
+			var material3 = new THREE.MeshStandardMaterial( { color: colorB, metalness: 0.5, roughness: 0.1 } );
+			
+						
+		var spider = new THREE.Mesh( spidergeometry, material1 );
+		var mysterio = new THREE.Mesh( mysteriogeometry, material2 );
+		
+		
+		mysterio.translateX(2);
+		mysterio.translateY(1);
+		
+		
+scene.add( spider );
+scene.add( mysterio );
+			
+			
+
+
+			
+			camera.lookAt( origin );
+		}
+		function animate(){
+			requestAnimationFrame( animate );
+			controls.update();
+			
+			
+			//console.log(time);
+			
+			if ( time< 7 ){
+				render1();
+				}
+				if ( time> 7&&time<13 ){
+				render2();
+				}
+				
+				if ( time> 13&&time<19 ){
+				render3();
+				}
+				
+				if ( time> 19&&time<21 ){
+				render4();
+				}
+				
+				if ( time> 21&&time<28 ){
+				render5();
+				}
+				
+				if ( time> 28&&time<31 ){
+				render6();
+				}
+				
+				if ( time> 31&&time<46 ){
+				render7();
+				}
+				
+				if ( time> 46&&time<50 ){
+				render8();
+				}
+				if ( time> 50&&time<57 ){
+				render9();
+				}
+					if ( time> 57 ){
+				render10();
+				}
+				
+				//render10();
+			
+		}
+		function render1(){
+			
+			 var dtime = Date.now()-startTime;
+			 time=time+0.027;
+			
+        camera.position.x = -5+(dtime/10000);
+		camera.position.y = 3;
+        camera.position.z = 2.5-(dtime/10000);
+        camera.lookAt( 0, 0, 0 );
+        renderer.render( scene, camera );
+					
+		}
+		function render2(){
+			
+			 var dtime = Date.now()-startTime;
+			time=time+0.027;
+       
+	   camera.position.x = 1.5;
+			camera.position.y = -0.5;
+		  	camera.position.z = 4;
+	   
+        camera.lookAt( 1, 1, 0 );
+        renderer.render( scene, camera );
+			
+		}
+		function render3(){
+			
+			 var dtime = Date.now()-startTime;
+			 time=time+0.027;
+			
+        camera.position.x = -0.3;
+			camera.position.y = 1.5;
+		  	camera.position.z = 1;
+        camera.lookAt( 1, 2, 0.5 );
+        renderer.render( scene, camera );
+					}
+					function render4(){
+			
+			 var dtime = Date.now()-startTime;
+			 time=time+0.027;
+			
+        camera.position.x = 1;
+			camera.position.y = 0.5;
+		  	camera.position.z = 0;
+        camera.lookAt( 0, 1, 0);
+        renderer.render( scene, camera );
+					}
+					function render5(){
+			
+			 var dtime = Date.now()-startTime;
+			 time=time+0.027;
+			
+        camera.position.x = -1+(-2.5*(Math.cos(dtime/10000)));
+		camera.position.y = 3;
+        camera.position.z = 2.5+(1.5*(Math.sin(dtime/10000)));
+        camera.lookAt( 0, 0, 0 );
+        renderer.render( scene, camera );
+					
+		}
+		
+		function render6(){
+			
+			 var dtime = Date.now()-startTime;
+			 time=time+0.027;
+			
+        camera.position.x = 1;
+			camera.position.y = 0.5;
+		  	camera.position.z = 0;
+        camera.lookAt( 0, 1, 0);
+        renderer.render( scene, camera );
+					}
+					
+					function render7(){
+			
+			 var dtime = Date.now()-startTime;
+			 time=time+0.027;
+			
+        camera.position.x = -0.3;
+			camera.position.y = 1.5;
+		  	camera.position.z = 1;
+        camera.lookAt( 1, 2, 0.5 );
+        renderer.render( scene, camera );
+					}
+					function render8(){
+			
+			 var dtime = Date.now()-startTime;
+			 time=time+0.027;
+			
+        camera.position.x = 1;
+			camera.position.y = 1.7;
+		  	camera.position.z = 1.5;
+        camera.lookAt( 0, 1, 0 );
+        renderer.render( scene, camera );
+					}
+					
+					function render9(){
+			
+			 var dtime = Date.now()-startTime;
+			 time=time+0.027;
+			
+        camera.position.x = -0.2;
+			camera.position.y = 0.8;
+		  	camera.position.z = 1.1;
+        camera.lookAt( 1, 1.5, -0.4 );
+        renderer.render( scene, camera );
+					}
+					
+					function render10(){
+			
+			 var dtime = Date.now()-startTime;
+			 time=time+0.027;
+			
+        camera.position.x = 1;
+			camera.position.y = 1.7;
+		  	camera.position.z = 1.5;
+        camera.lookAt( 0, 1, 0 );
+        renderer.render( scene, camera );
+					}
+					
+					
+    </script>
+  </body>
+</html>
