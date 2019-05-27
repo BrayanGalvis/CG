@@ -1,7 +1,7 @@
 sceneSetups:
 - path: Assets/escena.unity
   isLoaded: 1
-  isActive: 1
+  isActive: 0
 - path: Assets/water_Reflections&Refractions1.unity
   isLoaded: 1
-  isActive: 0
+  isActive: 1
