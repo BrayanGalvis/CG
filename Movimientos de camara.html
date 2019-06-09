@@ -9,6 +9,8 @@
   <body>
    <script src="js/three.min.js"></script>
     <script src="js/controls/OrbitControls.js"></script>
+	<script src="js/csg.js"></script>
+	<script src="js/THREE.CSG.js"></script>
     <script>
 		var scene, aspect, camera, renderer, controls;
 		var time=0;
@@ -68,35 +70,425 @@
 			
 			
 			var spidergeometry = new THREE.BoxGeometry( 1, 2, 1 );
-			var mysteriogeometry = new THREE.BoxGeometry( 2, 3, 2 );
+			var mysteriogeometry = new THREE.BoxGeometry( 1, 3, 1 );
+			
+			var recortGeo = new THREE.BoxGeometry( 3, 5, 0.5 );
+			var recortGeo2 = new THREE.BoxGeometry( 3, 3, 0.5 );
+			var recortGeo3 = new THREE.BoxGeometry( 4, 4, 4 );
+			var recortGeo4 = new THREE.BoxGeometry( 3, 3, 1 );
+			var mysteriogeometry2 = new THREE.BoxGeometry( 2, 2, 2 );
+			var cilingeo = new THREE.CylinderGeometry( 1, 1, 2.2, 32 );
+			var spheregeo = new THREE.SphereGeometry( 0.55, 50, 50 );
 
 
 					
 			//CREAR LOS MATERIALES
             var material1 = new THREE.MeshStandardMaterial( { color: colorR, metalness: 0.5, roughness: 0.1 } );
-			var material2 = new THREE.MeshStandardMaterial( { color: colorG, metalness: 0.5, roughness: 0.1, transparent:true, opacity: 0.5  } );
+			var material2 = new THREE.MeshStandardMaterial( { color: 0x2c8545, metalness: 0.5, roughness: 0.1 } );
 			var material3 = new THREE.MeshStandardMaterial( { color: colorB, metalness: 0.5, roughness: 0.1 } );
 			
 						
 		var spider = new THREE.Mesh( spidergeometry, material1 );
-		var mysterio = new THREE.Mesh( mysteriogeometry, material2 );
 		
 		
-		mysterio.translateX(2);
-		mysterio.translateY(1);
 		
-		
-scene.add( spider );
-scene.add( mysterio );
-			
-			
-
+//scene.add( spider );
 
 			
+			
+			//misterio
+			var mysterio = new THREE.Mesh( mysteriogeometry);
+		
+		
+				mysterio.translateX(2);
+				mysterio.translateY(1);
+		
+		
+			var f1 = new THREE.Mesh( mysteriogeometry);	
+				
+				f1.translateX(2.175);
+				f1.translateY(1);
+				f1.translateZ(0.3);
+				f1.rotateY(45);
+				
+				
+			var f2 = new THREE.Mesh ( mysteriogeometry ) ;
+			
+				f2.translateX(2.175);
+				f2.translateY(1);
+				f2.translateZ(-0.3);
+				f2.rotateY(-45);
+				
+			var f3 = new THREE.Mesh ( mysteriogeometry ) ;
+			
+				f3.translateX(2.5);
+				f3.translateY(1);
+				f3.translateZ(0.3);
+				f3.rotateY(-45);
+				
+			var f4 = new THREE.Mesh ( mysteriogeometry ) ;
+			
+				f4.translateX(2.5);
+				f4.translateY(1);
+				f4.translateZ(-0.3);
+				f4.rotateY(45);
+			
+			var f5 = new THREE.Mesh ( mysteriogeometry ) ;
+			
+				f5.translateX(2.67);
+				f5.translateY(1);
+				
+			var f6 = new THREE.Mesh ( recortGeo ) ;
+				
+				f6.translateX(1.6);
+				f6.translateY(1);
+				f6.translateZ(1);
+				f6.rotateY(-45);
+				
+			var f7 = new THREE.Mesh ( recortGeo ) ;
+				
+				f7.translateX(1.6);
+				f7.translateY(1);
+				f7.translateZ(-1);
+				f7.rotateY(45);
+				
+			var f8 = new THREE.Mesh ( recortGeo ) ;
+				
+				f8.translateX(3.1);
+				f8.translateY(1);
+				f8.translateZ(1);
+				f8.rotateY(45);
+				
+			var f9 = new THREE.Mesh ( recortGeo ) ;
+				
+				f9.translateX(3.1);
+				f9.translateY(1);
+				f9.translateZ(-1);
+				f9.rotateY(-45);
+			
+			var f10 = new THREE.Mesh ( mysteriogeometry2 ) ;
+				
+				f10.translateX(2.25);
+				f10.translateY(2);
+				f10.translateZ(0);
+				
+			var f11 = new THREE.Mesh ( recortGeo2 ) ;
+				
+				f11.translateX(1.5);
+				f11.translateY(2);
+				f11.translateZ(-1.38);
+				f11.rotateY(0.523599);
+				f11.rotateX(-0.349066);
+				
+			var f12 = new THREE.Mesh ( recortGeo2 ) ;
+				
+				f12.translateX(1.5);
+				f12.translateY(2);
+				f12.translateZ(1.38);
+				f12.rotateY(-0.523599);
+				f12.rotateX(0.349066);
+				
+			var f13 = new THREE.Mesh ( recortGeo2 ) ;
+				
+				f13.translateX(3.5);
+				f13.translateY(2);
+				f13.translateZ(1.1);
+				f13.rotateY(0.523599);
+				f13.rotateX(0.261799);
+			
+			var f14 = new THREE.Mesh ( recortGeo2 ) ;
+				
+				f14.translateX(3.5);
+				f14.translateY(2);
+				f14.translateZ(-1.1);
+				f14.rotateY(-0.523599);
+				f14.rotateX(-0.261799);
+				
+			var f15 = new THREE.Mesh ( recortGeo2 ) ;
+				
+				f15.translateX(0.85);
+				f15.translateY(2);
+				f15.translateZ(0);
+				f15.rotateY(1.5708);
+				f15.rotateX(-0.261799);
+				
+			var f16 = new THREE.Mesh ( cilingeo ) ;
+				
+				f16.translateX(0);
+				f16.translateY(2);
+				f16.translateZ(0);
+				f16.rotateY(0);
+				f16.rotateX(1.5708);
+				
+			var f17 = new THREE.Mesh ( recortGeo3 ) ;
+				
+				f17.translateX(0);
+				f17.translateY(0);
+				f17.translateZ(0);
+				f17.rotateY(0);
+				f17.rotateX(0);
+				
+			var f18 = new THREE.Mesh ( recortGeo3 ) ;
+				
+				f18.applyMatrix( new THREE.Matrix4().makeScale(1,1,.55) );
+				f18.translateX(0);
+				f18.translateY(4);
+				f18.translateZ(0);
+				f18.rotateY(0);
+				f18.rotateX(0);
+				
+			var f19 = new THREE.Mesh ( recortGeo2 ) ;
+				
+				f19.translateX(0);
+				f19.translateY(3.33);
+				f19.translateZ(-0.23);
+				f19.rotateY(0);
+				f19.rotateX(0.785398);
+				
+			var f20 = new THREE.Mesh ( recortGeo2 ) ;
+				
+				f20.translateX(0);
+				f20.translateY(3.33);
+				f20.translateZ(0.23);
+				f20.rotateY(0);
+				f20.rotateX(-0.785398);
+				
+			var f21 = new THREE.Mesh ( recortGeo4 ) ;
+				
+				f21.translateX(1.1);
+				f21.translateY(-1);
+				f21.translateZ(-0.8);
+				f21.rotateY(0.610865);
+				f21.rotateX(0);
+				
+			var f23 = new THREE.Mesh ( recortGeo4 ) ;
+				
+				f23.translateX(1.1);
+				f23.translateY(-1);
+				f23.translateZ(0.8);
+				f23.rotateY(-0.610865);
+				f23.rotateX(0);
+				
+			var f24 = new THREE.Mesh ( recortGeo4 ) ;
+				
+				f24.translateX(3.7);
+				f24.translateY(-1);
+				f24.translateZ(-0.8);
+				f24.rotateY(-0.610865);
+				f24.rotateX(0);
+			
+			var f25 = new THREE.Mesh ( recortGeo4 ) ;
+				
+				f25.translateX(3.7);
+				f25.translateY(-1);
+				f25.translateZ(0.8);
+				f25.rotateY(0.610865);
+				f25.rotateX(0);
+				
+			var f26 = new THREE.Mesh ( spheregeo ) ;
+				
+				f26.translateX(2.4);
+				f26.translateY(-1.2);
+				f26.translateZ(0.8);
+				f26.rotateY(0);
+				f26.rotateX(0);
+			
+			var f27 = new THREE.Mesh ( spheregeo ) ;
+				
+				f27.translateX(2.4);
+				f27.translateY(-1.2);
+				f27.translateZ(-0.8);
+				f27.rotateY(0);
+				f27.rotateX(0);
+				
+			var mysCSG = THREE.CSG.fromMesh( mysterio );
+			var f1CSG = THREE.CSG.fromMesh( f1 );
+			var r1 = mysCSG.union( f1CSG );
+			var R1 = THREE.CSG.toMesh( r1 );
+			R1.material = material2;
+			
+			var R2CSG = THREE.CSG.fromMesh( R1 );
+			var f2CSG = THREE.CSG.fromMesh( f2 );
+			var r2 = R2CSG.union( f2CSG );
+			var R2 = THREE.CSG.toMesh( r2 );
+			R2.material = material2;
+			
+			var R3CSG = THREE.CSG.fromMesh( R2 );
+			var f3CSG = THREE.CSG.fromMesh( f3 );
+			var r3 = R3CSG.union( f3CSG );
+			var R3 = THREE.CSG.toMesh( r3 );
+			R3.material = material2;
+			
+			var R4CSG = THREE.CSG.fromMesh( R3 );
+			var f4CSG = THREE.CSG.fromMesh( f4 );
+			var r4 = R4CSG.union( f4CSG );
+			var R4 = THREE.CSG.toMesh( r4 );
+			R4.material = material2;
+			
+			var R5CSG = THREE.CSG.fromMesh( R4 );
+			var f5CSG = THREE.CSG.fromMesh( f5 );
+			var r5 = R5CSG.union( f5CSG );
+			var R5 = THREE.CSG.toMesh( r5 );
+			R5.material = material2;
+			
+			var R6CSG = THREE.CSG.fromMesh( R5 );
+			var f6CSG = THREE.CSG.fromMesh( f6 );
+			var r6 = R6CSG.subtract( f6CSG );
+			var R6 = THREE.CSG.toMesh( r6 );
+			R6.material = material2;
+			
+			var R7CSG = THREE.CSG.fromMesh( R6 );
+			var f7CSG = THREE.CSG.fromMesh( f7 );
+			var r7 = R7CSG.subtract( f7CSG );
+			var R7 = THREE.CSG.toMesh( r7 );
+			R7.material = material2;
+			
+			var R8CSG = THREE.CSG.fromMesh( R7 );
+			var f8CSG = THREE.CSG.fromMesh( f8 );
+			var r8 = R8CSG.subtract( f8CSG );
+			var R8 = THREE.CSG.toMesh( r8 );
+			R8.material = material2;
+			
+			var R9CSG = THREE.CSG.fromMesh( R8 );
+			var f9CSG = THREE.CSG.fromMesh( f9 );
+			var r9 = R9CSG.subtract( f9CSG );
+			var R9 = THREE.CSG.toMesh( r9 );
+			R9.material = material2;
+			
+			var R10CSG = THREE.CSG.fromMesh( R9 );
+			var f10CSG = THREE.CSG.fromMesh( f10 );
+			var r10 = R10CSG.union( f10CSG );
+			var R10 = THREE.CSG.toMesh( r10 );
+			R10.material = material2;
+			
+			var R11CSG = THREE.CSG.fromMesh( R10 );
+			var f11CSG = THREE.CSG.fromMesh( f11 );
+			var r11 = R11CSG.subtract( f11CSG );
+			var R11 = THREE.CSG.toMesh( r11 );
+			R11.material = material2;
+			
+			var R12CSG = THREE.CSG.fromMesh( R11 );
+			var f12CSG = THREE.CSG.fromMesh( f12 );
+			var r12 = R12CSG.subtract( f12CSG );
+			var R12 = THREE.CSG.toMesh( r12 );
+			R12.material = material2;
+			
+			var R13CSG = THREE.CSG.fromMesh( R12 );
+			var f13CSG = THREE.CSG.fromMesh( f13 );
+			var r13 = R13CSG.subtract( f13CSG );
+			var R13 = THREE.CSG.toMesh( r13 );
+			R13.material = material2;
+			
+			var R14CSG = THREE.CSG.fromMesh( R13 );
+			var f14CSG = THREE.CSG.fromMesh( f14 );
+			var r14 = R14CSG.subtract( f14CSG );
+			var R14 = THREE.CSG.toMesh( r14 );
+			R14.material = material2;
+			
+			var R15CSG = THREE.CSG.fromMesh( R14 );
+			var f15CSG = THREE.CSG.fromMesh( f15 );
+			var r15 = R15CSG.subtract( f15CSG );
+			var R15 = THREE.CSG.toMesh( r15 );
+			R15.material = material2;
+			
+			var R16CSG = THREE.CSG.fromMesh( f16 );
+			var f16CSG = THREE.CSG.fromMesh( f17 );
+			var r16 = R16CSG.subtract( f16CSG );
+			var R16 = THREE.CSG.toMesh( r16 );
+			R16.material = material2;
+			
+			var R17CSG = THREE.CSG.fromMesh( R16 );
+			var f17CSG = THREE.CSG.fromMesh( f18 );
+			var r17 = f17CSG.subtract( R17CSG );
+			var R17 = THREE.CSG.toMesh( r17 );
+			R17.translateX(2.25);
+			R17.translateY(0.1);
+			
+			var R18CSG = THREE.CSG.fromMesh( R15 );
+			var f18CSG = THREE.CSG.fromMesh( R17 );
+			var r18 = R18CSG.subtract( f18CSG );
+			var R18 = THREE.CSG.toMesh( r18 );
+			R18.material = material2;
+			
+			var R19CSG = THREE.CSG.fromMesh( R16 );
+			var f19CSG = THREE.CSG.fromMesh( f19 );
+			var r19 = R19CSG.subtract( f19CSG );
+			var R19 = THREE.CSG.toMesh( r19 );
+			R19.material = material2;
+			
+			var R20CSG = THREE.CSG.fromMesh( R19 );
+			var f20CSG = THREE.CSG.fromMesh( f20 );
+			var r20 = R20CSG.subtract( f20CSG );
+			var R20 = THREE.CSG.toMesh( r20 );
+			R20.material = material2;
+			R20.rotateZ(Math.PI);
+			R20.translateY(-1.5);
+			R20.translateX(-2.32);
+			
+			var R21CSG = THREE.CSG.fromMesh( R20 );
+			var f21CSG = THREE.CSG.fromMesh( R18 );
+			var r21 = R21CSG.union( f21CSG );
+			var R21 = THREE.CSG.toMesh( r21 );
+			R21.material = material2;
+			
+			var R22CSG = THREE.CSG.fromMesh( R21 );
+			var f22CSG = THREE.CSG.fromMesh( f21 );
+			var r22 = R22CSG.subtract( f22CSG );
+			var R22 = THREE.CSG.toMesh( r22 );
+			R22.material = material2;
+			
+			var R23CSG = THREE.CSG.fromMesh( R22 );
+			var f23CSG = THREE.CSG.fromMesh( f23 );
+			var r23 = R23CSG.subtract( f23CSG );
+			var R23 = THREE.CSG.toMesh( r23 );
+			R23.material = material2;
+			
+			var R24CSG = THREE.CSG.fromMesh( R23 );
+			var f24CSG = THREE.CSG.fromMesh( f24 );
+			var r24 = R24CSG.subtract( f24CSG );
+			var R24 = THREE.CSG.toMesh( r24 );
+			R24.material = material2;
+			
+			var R25CSG = THREE.CSG.fromMesh( R24 );
+			var f25CSG = THREE.CSG.fromMesh( f25 );
+			var r25 = R25CSG.subtract( f25CSG );
+			var R25 = THREE.CSG.toMesh( r25 );
+			R25.material = material2;
+			
+			var R26CSG = THREE.CSG.fromMesh( R25 );
+			var f26CSG = THREE.CSG.fromMesh( f26 );
+			var r26 = R26CSG.union( f26CSG );
+			var R26 = THREE.CSG.toMesh( r26 );
+			R26.material = material2;
+			
+			var R27CSG = THREE.CSG.fromMesh( R26 );
+			var f27CSG = THREE.CSG.fromMesh( f27 );
+			var r27 = R27CSG.union( f27CSG );
+			var R27 = THREE.CSG.toMesh( r27 );
+			R27.material = material2;
+			
+			//scene.add(f26);
+			scene.add(R27);
+			
+			
+			///
+			camera.position.x = 4;
+			camera.position.y = 3;
+		  	camera.position.z = 5;
+			
+			//////
 			camera.lookAt( origin );
 		}
 		function animate(){
-			requestAnimationFrame( animate );
+		
+							requestAnimationFrame( animate );
+							controls.update();
+							render();
+		
+		
+		
+		
+			/*requestAnimationFrame( animate );
 			controls.update();
 			
 			
@@ -140,9 +532,9 @@ scene.add( mysterio );
 				}
 				
 				//render10();
-			
+			*/
 		}
-		function render1(){
+		/*function render1(){
 			
 			 var dtime = Date.now()-startTime;
 			 time=time+0.027;
@@ -259,8 +651,11 @@ scene.add( mysterio );
 		  	camera.position.z = 1.5;
         camera.lookAt( 0, 1, 0 );
         renderer.render( scene, camera );
-					}
-					
+					}*/
+		
+		function render(){
+			renderer.render( scene, camera );
+		}
 					
     </script>
   </body>
