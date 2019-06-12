@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Camaras escena</title>
+    <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+            #info {
+                position: absolute;
+                padding: 10px;
+                width: 100%;
+                text-align: center;
+                color: #FFFFFF;
+            }
+        
+    </style>
+  </head>
+  <body>
+  <div id="info">EL hombre que te araña contra el Mysteri-man<br/>
+            Oprimir flecha abajo para iniciar.<br/>
+            Oprimir de nuevo para salir.<br/>
+			Nicolás Garcia  6000275<br/>
+			Andres  Escobar 6000296<br/>
+			Brayan  Galvis  6000315<br/>
+        </div>
+   <script src="js/three.min.js"></script>
+    <script src="js/controls/OrbitControls.js"></script>
+	<script src="js/csg.js"></script>
+	<script src="js/THREE.CSG.js"></script>
+    <script>
+		var scene, aspect, camera, renderer, controls;
+		var brazoDDD, brazoZZZ, piernaDDD, piernaZZZ,Brazossss, Piernassss, todotorso,cabezaspidy;
+		var time=0;
+		 var dele = false;
+		var startTime = Date.now();
+		init();
+		animate();
+		function init(){
+			//INICIALIZACIÓN
+	        scene = new THREE.Scene();
+	        aspect = window.innerWidth / window.innerHeight;
+	        camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000);
+	        renderer = new THREE.WebGLRenderer();
+	        renderer.setSize( window.innerWidth, window.innerHeight );
+	        document.body.appendChild( renderer.domElement );
+			controls = new THREE.OrbitControls( camera, renderer.domElement );
+			
+			//ELEMENTOS COMUNES
+			
+			var size = 10;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+		  	var color = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA3333 );
+		  	var colorG = new THREE.Color( 0x33AA33 );
+		  	var colorB = new THREE.Color( 0x333366 );
+			var c1=false; 
+			var c2=false;
+			
+			
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper = new THREE.AxesHelper( size );
+			//scene.add( axesHelper );
+			
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color, color );
+			//scene.add( gridHelperXZ );
+            
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+
+            //CREAR ILUMINACIÓN
+            var ambient = new THREE.AmbientLight( 0xffffff, 2 );
+            scene.add( ambient );
+			
+            var pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
+            pointLight.position.set( -5, -2, 5 );
+            scene.add( pointLight );
+			
+            var pointLight = new THREE.PointLight( 0xffffff, .5, 100 );
+            pointLight.position.set( 5, -2, -5 );
+            scene.add( pointLight );
+			
+			//CREAR LAS GEOMETRÍAS
+			
+			
+			var spidergeometry = new THREE.BoxGeometry( 1, 2, 1 );
+			var mysteriogeometry = new THREE.BoxGeometry( 2, 3, 2 );
+			var pisoa = new THREE.BoxGeometry( 20, 35, 20 );
+			var cortepiso = new THREE.CylinderGeometry( 11, 11, 12, 32);
+			
+
+/////////
+
+var onKeyDown = function ( event ) {
+switch (event.keyCode) {
+				case 40: // TRASLADAR ADELANTE
+						if(dele==false){
+				console.log("Lexiste");
+				dele=true;
+				break;
+				}
+			
+			if(dele==true){
+				
+				
+               //System.exit(0);
+				close();
+				break;
+				}
+						break;
+			}
+}
+document.addEventListener( 'keydown', onKeyDown, false );
+					
+			//CREAR LOS MATERIALES
+           
+		    var material11 = new THREE.MeshStandardMaterial( { color: colorR, metalness: 0.5, roughness: 0.1 } );
+			var material12 = new THREE.MeshStandardMaterial( { color: colorG, metalness: 0.5, roughness: 0.1, transparent:true, opacity: 0.5  } );
+			var material13 = new THREE.MeshStandardMaterial( { color: colorB, metalness: 0.5, roughness: 0.1 } );
+			
+			var material123 = new THREE.MeshStandardMaterial( { color: colorR, metalness: 0.5, roughness: 0.1 } );
+			var material2 = new THREE.MeshStandardMaterial( { color: colorG, metalness: 0.5, roughness: 0.1, transparent:true, opacity: 0.5  } );
+			var material323 = new THREE.MeshStandardMaterial( { color: colorB, metalness: 0.5, roughness: 0.1 } );
+			
+			
+			 var material1 = new THREE.MeshStandardMaterial( { color: 0x8c1f0e, metalness: 0, roughness: 0.1 } );
+			var material4 = new THREE.MeshStandardMaterial( { color: 0x040652, metalness: 0, roughness: 0.1 } );
+			var material3 = new THREE.MeshStandardMaterial( { color: colorB, metalness: 0.5, roughness: 0.1 } );
+			var material2 = new THREE.MeshStandardMaterial( { color: colorG, metalness: 0.5, roughness: 0.1, transparent:true, opacity: 0.5  } );
+			//////////////////Piso
+			
+			var materialPISITO = new THREE.MeshStandardMaterial( { color: 0x81817e, metalness: 0.5, roughness: 0.1 } );
+		var pf33 = new THREE.Mesh ( pisoa ) ;
+		var Pisitorecort =  new THREE.Mesh( cortepiso );
+		
+		
+		var MmaterialTotalInvi = new THREE.MeshStandardMaterial( { color: colorG, metalness: 0.5, roughness: 0.1, transparent:true, opacity: 0  } );
+		
+		
+		
+		Pisitorecort.translateY(2.7);
+		
+		var PisitoCSG = THREE.CSG.fromMesh( pf33);
+			var pisitorecortCSG = THREE.CSG.fromMesh( Pisitorecort );
+			var r31 = PisitoCSG.subtract( pisitorecortCSG );
+			var RR31 = THREE.CSG.toMesh( r31 );
+			
+			RR31.translateY(3);
+			
+			RR31.material=materialPISITO;
+			scene.add(RR31);
+
+			
+			//////////
+			
+			
+			
+			////////////////////
+			
+								
+		var spiderzz = new THREE.Mesh( spidergeometry, material11 );
+		var mysterio = new THREE.Mesh( mysteriogeometry, material2 );
+		
+	var mysterioref = new THREE.Mesh( mysteriogeometry, material2 );
+		
+		mysterioref.translateX(2);
+		mysterioref.translateY(1);
+		
+		
+//scene.add( spiderzz );
+//scene.add( mysterioref );
+			
+				////////////////////////Mysterio
+				
+				
+				var MrecortGeo = new THREE.BoxGeometry( 3, 5, 0.5 );
+			var MrecortGeo2 = new THREE.BoxGeometry( 3, 3, 0.5 );
+			var MrecortGeo3 = new THREE.BoxGeometry( 4, 4, 4 );
+			var MrecortGeo4 = new THREE.BoxGeometry( 3, 3, 1 );
+			var MrecortGeo5 = new THREE.BoxGeometry( 4, 6, 4 );
+			var MrecortGeo6 = new THREE.BoxGeometry( 2.5, 1, 1 );
+			var mysteriogeometry2 = new THREE.BoxGeometry( 2, 2, 2 );
+			var Mcilingeo = new THREE.CylinderGeometry( 1, 1, 2.2, 32 );
+			var Mcilingeo2 = new THREE.CylinderGeometry( 0.55, 0.35, 2.2, 32 );
+			var Mcilingeo3 = new THREE.CylinderGeometry( 0.35, 0.5, 2.2, 32 );
+			var Mcilingeo4 = new THREE.CylinderGeometry( 0.3, 0.4, 2, 32 );
+			var Mcilingeo5 = new THREE.CylinderGeometry( 0.4, 0.3, 2, 32 );
+			var Mspheregeo = new THREE.SphereGeometry( 0.55, 50, 50 );
+			var Mspheregeo2 = new THREE.SphereGeometry( 1, 50, 50 );
+			var Mspheregeo3 = new THREE.SphereGeometry( 0.4, 50, 50 );
+
+
+					
+			//CREAR LOS MmaterialES
+            var Mmaterial1 = new THREE.MeshStandardMaterial( { color: colorR, metalness: 0.5, roughness: 0.1 } );
+			var Mmaterial2 = new THREE.MeshStandardMaterial( { color: 0x2c8545, metalness: 0.5, roughness: 0.1 } );
+			var Mmaterial3 = new THREE.MeshStandardMaterial( { color: colorB, metalness: 0.5, roughness: 0.1 } );
+			var Mmaterial4 = new THREE.MeshStandardMaterial( { color: 0x9a35e8, metalness: 0.5, roughness: 0.1 } );
+			
+			var MmaterialTotalInvi = new THREE.MeshStandardMaterial( { color: colorG, metalness: 0.5, roughness: 0.1, transparent:true, opacity: 0  } );
+			var Mmatcabe1 = new THREE.MeshStandardMaterial( { color: 0xe4f5e9, metalness: 0.5, roughness: 0.1} );
+			var Mmatcabe2 = new THREE.MeshStandardMaterial( { color: 0x676566, metalness: 0.5, roughness: 0.1} );
+			
+						
+		var spider = new THREE.Mesh( spidergeometry, Mmaterial1 );
+		cabezaspidy = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		todotorso = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		Brazossss = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		Piernassss = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		brazoDDD = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		brazoZZZ = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		piernaDDD = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		piernaZZZ = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		torsomysterio = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		piernasmysterio = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		brazoderechomysterio = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		brazoizquierdomysterio = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		antebrazoderechomysterio = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		antebrazoizquierdomysterio = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		cabeza1 = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+		cabezarota = new THREE.Mesh( mysteriogeometry2, MmaterialTotalInvi);
+				
+				
+				/////////////////////Operaciones de Mysterio
+				
+				//misterio
+			var mysterio = new THREE.Mesh( mysteriogeometry);
+		
+		
+				mysterio.translateX(2);
+				mysterio.translateY(1);
+		
+		
+			var f1 = new THREE.Mesh( mysteriogeometry);	
+				
+				f1.translateX(2.175);
+				f1.translateY(1);
+				f1.translateZ(0.3);
+				f1.rotateY(45);
+				
+				
+			var f2 = new THREE.Mesh ( mysteriogeometry ) ;
+			
+				f2.translateX(2.175);
+				f2.translateY(1);
+				f2.translateZ(-0.3);
+				f2.rotateY(-45);
+				
+			var f3 = new THREE.Mesh ( mysteriogeometry ) ;
+			
+				f3.translateX(2.5);
+				f3.translateY(1);
+				f3.translateZ(0.3);
+				f3.rotateY(-45);
+				
+			var f4 = new THREE.Mesh ( mysteriogeometry ) ;
+			
+				f4.translateX(2.5);
+				f4.translateY(1);
+				f4.translateZ(-0.3);
+				f4.rotateY(45);
+			
+			var f5 = new THREE.Mesh ( mysteriogeometry ) ;
+			
+				f5.translateX(2.67);
+				f5.translateY(1);
+				
+			var f6 = new THREE.Mesh ( MrecortGeo ) ;
+				
+				f6.translateX(1.6);
+				f6.translateY(1);
+				f6.translateZ(1);
+				f6.rotateY(-45);
+				
+			var f7 = new THREE.Mesh ( MrecortGeo ) ;
+				
+				f7.translateX(1.6);
+				f7.translateY(1);
+				f7.translateZ(-1);
+				f7.rotateY(45);
+				
+			var f8 = new THREE.Mesh ( MrecortGeo ) ;
+				
+				f8.translateX(3.1);
+				f8.translateY(1);
+				f8.translateZ(1);
+				f8.rotateY(45);
+				
+			var f9 = new THREE.Mesh ( MrecortGeo ) ;
+				
+				f9.translateX(3.1);
+				f9.translateY(1);
+				f9.translateZ(-1);
+				f9.rotateY(-45);
+			
+			var f10 = new THREE.Mesh ( mysteriogeometry2 ) ;
+				
+				f10.translateX(2.25);
+				f10.translateY(2);
+				
+			var f11 = new THREE.Mesh ( MrecortGeo2 ) ;
+				
+				f11.translateX(1.5);
+				f11.translateY(2);
+				f11.translateZ(-1.38);
+				f11.rotateY(0.523599);
+				f11.rotateX(-0.349066);
+				
+			var f12 = new THREE.Mesh ( MrecortGeo2 ) ;
+				
+				f12.translateX(1.5);
+				f12.translateY(2);
+				f12.translateZ(1.38);
+				f12.rotateY(-0.523599);
+				f12.rotateX(0.349066);
+				
+			var f13 = new THREE.Mesh ( MrecortGeo2 ) ;
+				
+				f13.translateX(3.5);
+				f13.translateY(2);
+				f13.translateZ(1.1);
+				f13.rotateY(0.523599);
+				f13.rotateX(0.261799);
+			
+			var f14 = new THREE.Mesh ( MrecortGeo2 ) ;
+				
+				f14.translateX(3.5);
+				f14.translateY(2);
+				f14.translateZ(-1.1);
+				f14.rotateY(-0.523599);
+				f14.rotateX(-0.261799);
+				
+			var f15 = new THREE.Mesh ( MrecortGeo2 ) ;
+				
+				f15.translateX(0.85);
+				f15.translateY(2);
+				f15.rotateY(1.5708);
+				f15.rotateX(-0.261799);
+				
+			var f16 = new THREE.Mesh ( Mcilingeo ) ;
+				
+				f16.translateY(2);
+				f16.rotateX(1.5708);
+				
+			var f17 = new THREE.Mesh ( MrecortGeo3 ) ;
+				
+				
+			var f18 = new THREE.Mesh ( MrecortGeo3 ) ;
+				
+				f18.applyMatrix( new THREE.Matrix4().makeScale(1,1,.55) );
+				f18.translateY(4);
+				
+			var f19 = new THREE.Mesh ( MrecortGeo2 ) ;
+				
+				f19.translateY(3.33);
+				f19.translateZ(-0.23);
+				f19.rotateX(0.785398);
+				
+			var f20 = new THREE.Mesh ( MrecortGeo2 ) ;
+				
+				f20.translateY(3.33);
+				f20.translateZ(0.23);
+				f20.rotateX(-0.785398);
+				
+			var f21 = new THREE.Mesh ( MrecortGeo4 ) ;
+				
+				f21.translateX(1.1);
+				f21.translateY(-1);
+				f21.translateZ(-0.8);
+				f21.rotateY(0.610865);
+				
+			var f23 = new THREE.Mesh ( MrecortGeo4 ) ;
+				
+				f23.translateX(1.1);
+				f23.translateY(-1);
+				f23.translateZ(0.8);
+				f23.rotateY(-0.610865);
+				
+			var f24 = new THREE.Mesh ( MrecortGeo4 ) ;
+				
+				f24.translateX(3.7);
+				f24.translateY(-1);
+				f24.translateZ(-0.8);
+				f24.rotateY(-0.610865);
+			
+			var f25 = new THREE.Mesh ( MrecortGeo4 ) ;
+				
+				f25.translateX(3.7);
+				f25.translateY(-1);
+				f25.translateZ(0.8);
+				f25.rotateY(0.610865);
+				
+			var f26 = new THREE.Mesh ( Mspheregeo ) ;
+				
+				f26.translateX(2.4);
+				f26.translateY(-1.2);
+				f26.translateZ(0.8);
+			
+			var f27 = new THREE.Mesh ( Mspheregeo ) ;
+				
+				f27.translateX(2.4);
+				f27.translateY(-1.2);
+				f27.translateZ(-0.8);
+				
+			var f28 = new THREE.Mesh ( Mspheregeo ) ;
+				
+				f28.translateX(2.3);
+				f28.translateY(2.4);
+				f28.translateZ(-1.1);
+				
+			var f29 = new THREE.Mesh ( Mspheregeo ) ;
+				
+				f29.translateX(2.3);
+				f29.translateY(2.4);
+				f29.translateZ(1.1);
+				
+			var f30 = new THREE.Mesh ( MrecortGeo5 ) ;
+				
+				f30.translateX(1.25);
+				f30.translateY(-0.85);
+				
+			var f31 = new THREE.Mesh ( MrecortGeo5 ) ;
+				
+				f31.translateX(-0.75);
+				f31.translateY(1);
+				
+			var f32 = new THREE.Mesh ( MrecortGeo5 ) ;
+				
+				f32.translateX(5.285);
+				f32.translateY(-0.85);
+				
+			var f33 = new THREE.Mesh ( MrecortGeo5 ) ;
+				
+				f33.applyMatrix( new THREE.Matrix4().makeScale(1,1,0.7) );
+				f33.translateX(2);
+				f33.translateY(0.3);
+				
+			var f34 = new THREE.Mesh ( Mcilingeo ) ;
+				
+				f34.applyMatrix( new THREE.Matrix4().makeScale(1,3,1) );
+				f34.translateX(2.2);
+				f34.translateY(1.8);
+				f34.rotateX(1.5708);
+				
+			var f35 = new THREE.Mesh ( MrecortGeo ) ;
+				
+				f35.translateX(3.5);
+				f35.translateY(1.6);
+				f35.rotateY(1.5708);
+				
+			var f36 = new THREE.Mesh ( Mcilingeo2 ) ;
+				
+				f36.translateX(2.4);
+				f36.translateY(-2.3);
+				f36.translateZ(0.8);
+				f36.rotateY(0);
+				
+			var f37 = new THREE.Mesh ( Mcilingeo3 ) ;
+				
+				f37.translateX(2.4);
+				f37.translateY(-4);
+				f37.translateZ(0.8);
+				f37.rotateY(0);
+				
+			var f38 = new THREE.Mesh ( Mcilingeo2 ) ;
+				
+				f38.translateX(2.4);
+				f38.translateY(-2.3);
+				f38.translateZ(-0.8);
+				f38.rotateY(0);
+				
+			var f39 = new THREE.Mesh ( Mcilingeo3 ) ;
+				
+				f39.translateX(2.4);
+				f39.translateY(-4);
+				f39.translateZ(-0.8);
+				f39.rotateY(0);
+				
+			var f40 = new THREE.Mesh ( MrecortGeo6 ) ;
+				
+				f40.translateX(2);
+				f40.translateY(-5.5);
+				f40.translateZ(0.8);
+				f40.rotateY(0);
+			
+			var f41 = new THREE.Mesh ( MrecortGeo ) ;
+				
+				f41.applyMatrix( new THREE.Matrix4().makeScale(1,1,2) );
+				f41.translateX(0.25);
+				f41.translateY(-5.5);
+				f41.translateZ(0.8);
+				f41.rotateY(1.5708);
+				f41.rotateX(0.977384);
+				
+			var f42 = new THREE.Mesh ( Mcilingeo4 ) ;
+				
+				f42.translateX(2.3);
+				f42.translateY(1.3);
+				f42.translateZ(1.5);
+				f42.rotateX(-0.174533);
+				
+			var f43 = new THREE.Mesh ( Mspheregeo3 ) ;
+				
+				f43.translateX(2.3);
+				f43.translateY(0.2);
+				f43.translateZ(1.7);
+				f43.rotateX(0);
+			
+			var f44 = new THREE.Mesh ( Mcilingeo4 ) ;
+				
+				f44.translateX(2.3);
+				f44.translateY(1.3);
+				f44.translateZ(-1.5);
+				f44.rotateX(0.174533);
+				
+			var f45 = new THREE.Mesh ( Mspheregeo3 ) ;
+				
+				f45.translateX(2.3);
+				f45.translateY(0.2);
+				f45.translateZ(-1.7);
+				f45.rotateX(0);
+				
+			var f46 = new THREE.Mesh ( Mcilingeo5 ) ;
+				
+				f46.translateX(2.1);
+				f46.translateY(-0.9);
+				f46.translateZ(1.7);
+				f46.rotateZ(-0.174533);
+				
+			var f47 = new THREE.Mesh ( Mspheregeo3 ) ;
+				
+				f47.translateX(1.9);
+				f47.translateY(-2);
+				f47.translateZ(1.7);
+				f47.rotateX(0);
+				
+			var f48 = new THREE.Mesh ( Mcilingeo5 ) ;
+				
+				f48.translateX(2.1);
+				f48.translateY(-0.9);
+				f48.translateZ(-1.7);
+				f48.rotateZ(-0.174533);
+				
+			var f49 = new THREE.Mesh ( Mspheregeo3 ) ;
+				
+				f49.translateX(1.9);
+				f49.translateY(-2);
+				f49.translateZ(-1.7);
+				f49.rotateX(0);
+				
+			var f50 = new THREE.Mesh ( Mspheregeo2 ) ;
+				
+				f50.translateX(0);
+				f50.translateY(0);
+				f50.translateZ(0);
+				f50.rotateX(0);
+				
+			var f51 = new THREE.Mesh ( MrecortGeo3 ) ;
+				
+				f51.translateX(0);
+				f51.translateY(-2.3);
+				f51.translateZ(0);
+				f51.rotateX(0);
+				
+			var mysCSG = THREE.CSG.fromMesh( mysterio );
+			var f1CSG = THREE.CSG.fromMesh( f1 );
+			var r1 = mysCSG.union( f1CSG );
+			var R1 = THREE.CSG.toMesh( r1 );
+			
+			var R2CSG = THREE.CSG.fromMesh( R1 );
+			var f2CSG = THREE.CSG.fromMesh( f2 );
+			var r2 = R2CSG.union( f2CSG );
+			var R2 = THREE.CSG.toMesh( r2 );
+			
+			var R3CSG = THREE.CSG.fromMesh( R2 );
+			var f3CSG = THREE.CSG.fromMesh( f3 );
+			var r3 = R3CSG.union( f3CSG );
+			var R3 = THREE.CSG.toMesh( r3 );
+			
+			var R4CSG = THREE.CSG.fromMesh( R3 );
+			var f4CSG = THREE.CSG.fromMesh( f4 );
+			var r4 = R4CSG.union( f4CSG );
+			var R4 = THREE.CSG.toMesh( r4 );
+			
+			var R5CSG = THREE.CSG.fromMesh( R4 );
+			var f5CSG = THREE.CSG.fromMesh( f5 );
+			var r5 = R5CSG.union( f5CSG );
+			var R5 = THREE.CSG.toMesh( r5 );
+			
+			var R6CSG = THREE.CSG.fromMesh( R5 );
+			var f6CSG = THREE.CSG.fromMesh( f6 );
+			var r6 = R6CSG.subtract( f6CSG );
+			var R6 = THREE.CSG.toMesh( r6 );
+			
+			var R7CSG = THREE.CSG.fromMesh( R6 );
+			var f7CSG = THREE.CSG.fromMesh( f7 );
+			var r7 = R7CSG.subtract( f7CSG );
+			var R7 = THREE.CSG.toMesh( r7 );
+			
+			var R8CSG = THREE.CSG.fromMesh( R7 );
+			var f8CSG = THREE.CSG.fromMesh( f8 );
+			var r8 = R8CSG.subtract( f8CSG );
+			var R8 = THREE.CSG.toMesh( r8 );
+			
+			var R9CSG = THREE.CSG.fromMesh( R8 );
+			var f9CSG = THREE.CSG.fromMesh( f9 );
+			var r9 = R9CSG.subtract( f9CSG );
+			var R9 = THREE.CSG.toMesh( r9 );
+			
+			var R10CSG = THREE.CSG.fromMesh( R9 );
+			var f10CSG = THREE.CSG.fromMesh( f10 );
+			var r10 = R10CSG.union( f10CSG );
+			var R10 = THREE.CSG.toMesh( r10 );
+			
+			var R11CSG = THREE.CSG.fromMesh( R10 );
+			var f11CSG = THREE.CSG.fromMesh( f11 );
+			var r11 = R11CSG.subtract( f11CSG );
+			var R11 = THREE.CSG.toMesh( r11 );
+			
+			var R12CSG = THREE.CSG.fromMesh( R11 );
+			var f12CSG = THREE.CSG.fromMesh( f12 );
+			var r12 = R12CSG.subtract( f12CSG );
+			var R12 = THREE.CSG.toMesh( r12 );
+			
+			var R13CSG = THREE.CSG.fromMesh( R12 );
+			var f13CSG = THREE.CSG.fromMesh( f13 );
+			var r13 = R13CSG.subtract( f13CSG );
+			var R13 = THREE.CSG.toMesh( r13 );
+			
+			var R14CSG = THREE.CSG.fromMesh( R13 );
+			var f14CSG = THREE.CSG.fromMesh( f14 );
+			var r14 = R14CSG.subtract( f14CSG );
+			var R14 = THREE.CSG.toMesh( r14 );
+			
+			var R15CSG = THREE.CSG.fromMesh( R14 );
+			var f15CSG = THREE.CSG.fromMesh( f15 );
+			var r15 = R15CSG.subtract( f15CSG );
+			var R15 = THREE.CSG.toMesh( r15 );
+			
+			var R16CSG = THREE.CSG.fromMesh( f16 );
+			var f16CSG = THREE.CSG.fromMesh( f17 );
+			var r16 = R16CSG.subtract( f16CSG );
+			var R16 = THREE.CSG.toMesh( r16 );
+			
+			var R17CSG = THREE.CSG.fromMesh( R16 );
+			var f17CSG = THREE.CSG.fromMesh( f18 );
+			var r17 = f17CSG.subtract( R17CSG );
+			var R17 = THREE.CSG.toMesh( r17 );
+			R17.translateX(2.25);
+			R17.translateY(0.1);
+			
+			var R18CSG = THREE.CSG.fromMesh( R15 );
+			var f18CSG = THREE.CSG.fromMesh( R17 );
+			var r18 = R18CSG.subtract( f18CSG );
+			var R18 = THREE.CSG.toMesh( r18 );
+			
+			var R19CSG = THREE.CSG.fromMesh( R16 );
+			var f19CSG = THREE.CSG.fromMesh( f19 );
+			var r19 = R19CSG.subtract( f19CSG );
+			var R19 = THREE.CSG.toMesh( r19 );
+			
+			var R20CSG = THREE.CSG.fromMesh( R19 );
+			var f20CSG = THREE.CSG.fromMesh( f20 );
+			var r20 = R20CSG.subtract( f20CSG );
+			var R20 = THREE.CSG.toMesh( r20 );
+			R20.rotateZ(Math.PI);
+			R20.translateY(-1.5);
+			R20.translateX(-2.32);
+			
+			var R21CSG = THREE.CSG.fromMesh( R20 );
+			var f21CSG = THREE.CSG.fromMesh( R18 );
+			var r21 = R21CSG.union( f21CSG );
+			var R21 = THREE.CSG.toMesh( r21 );
+			
+			var R22CSG = THREE.CSG.fromMesh( R21 );
+			var f22CSG = THREE.CSG.fromMesh( f21 );
+			var r22 = R22CSG.subtract( f22CSG );
+			var R22 = THREE.CSG.toMesh( r22 );
+			
+			var R23CSG = THREE.CSG.fromMesh( R22 );
+			var f23CSG = THREE.CSG.fromMesh( f23 );
+			var r23 = R23CSG.subtract( f23CSG );
+			var R23 = THREE.CSG.toMesh( r23 );
+			
+			var R24CSG = THREE.CSG.fromMesh( R23 );
+			var f24CSG = THREE.CSG.fromMesh( f24 );
+			var r24 = R24CSG.subtract( f24CSG );
+			var R24 = THREE.CSG.toMesh( r24 );
+			
+			var R25CSG = THREE.CSG.fromMesh( R24 );
+			var f25CSG = THREE.CSG.fromMesh( f25 );
+			var r25 = R25CSG.subtract( f25CSG );
+			var R25 = THREE.CSG.toMesh( r25 );
+			
+			var R26CSG = THREE.CSG.fromMesh( R25 );
+			var f26CSG = THREE.CSG.fromMesh( f26 );
+			var r26 = R26CSG.union( f26CSG );
+			var R26 = THREE.CSG.toMesh( r26 );
+			
+			var R27CSG = THREE.CSG.fromMesh( R26 );
+			var f27CSG = THREE.CSG.fromMesh( f27 );
+			var r27 = R27CSG.union( f27CSG );
+			var R27 = THREE.CSG.toMesh( r27 );
+			
+			var R28CSG = THREE.CSG.fromMesh( R27 );
+			var f28CSG = THREE.CSG.fromMesh( f28 );
+			var r28 = R28CSG.union( f28CSG );
+			var R28 = THREE.CSG.toMesh( r28 );
+			
+			var R29CSG = THREE.CSG.fromMesh( R28 );
+			var f29CSG = THREE.CSG.fromMesh( f29 );
+			var r29 = R29CSG.union( f29CSG );
+			var R29 = THREE.CSG.toMesh( r29 );
+			
+			var R30CSG = THREE.CSG.fromMesh( f30 );
+			var f30CSG = THREE.CSG.fromMesh( f31 );
+			var r30 = R30CSG.union( f30CSG );
+			var R30 = THREE.CSG.toMesh( r30 );
+			
+			R17.applyMatrix( new THREE.Matrix4().makeScale(1.03,1,1.5) );
+			R17.translateX(-0.06);
+			
+			var R31CSG = THREE.CSG.fromMesh( R30 );
+			var f31CSG = THREE.CSG.fromMesh( R17 );
+			var r31 = R31CSG.union( f31CSG );
+			var R31 = THREE.CSG.toMesh( r31 );
+			
+			var R32CSG = THREE.CSG.fromMesh( R31 );
+			var f32CSG = THREE.CSG.fromMesh( f32 );
+			var r32 = R32CSG.union( f32CSG );
+			var R32 = THREE.CSG.toMesh( r32 );
+			
+			var R33CSG = THREE.CSG.fromMesh( f33 );
+			var f33CSG = THREE.CSG.fromMesh( R32 );
+			var r33 = R33CSG.subtract( f33CSG );
+			var R33 = THREE.CSG.toMesh( r33 );
+			
+			var R34CSG = THREE.CSG.fromMesh( R33 );
+			var f34CSG = THREE.CSG.fromMesh( f34 );
+			var r34 = R34CSG.subtract( f34CSG );
+			var R34 = THREE.CSG.toMesh( r34 );
+			R34.material = Mmaterial4;
+			
+			var R35CSG = THREE.CSG.fromMesh( R29 );
+			var f35CSG = THREE.CSG.fromMesh( f35 );
+			var r35 = R35CSG.subtract( f35CSG );
+			var R35 = THREE.CSG.toMesh( r35 );
+			R35.material = Mmaterial2;
+			
+			torsomysterio.add(R34);
+			torsomysterio.add(R35);
+			
+			var R36CSG = THREE.CSG.fromMesh( f36 );
+			var f36CSG = THREE.CSG.fromMesh( f37 );
+			var r36 = R36CSG.union( f36CSG );
+			var R36 = THREE.CSG.toMesh( r36 );
+			R36.material = Mmaterial2;
+			
+			var R37CSG = THREE.CSG.fromMesh( f38 );
+			var f37CSG = THREE.CSG.fromMesh( f39 );
+			var r37 = R37CSG.union( f37CSG );
+			var R37 = THREE.CSG.toMesh( r37 );
+			R37.material = Mmaterial2;
+			
+			var R38CSG = THREE.CSG.fromMesh( f40 );
+			var f38CSG = THREE.CSG.fromMesh( f41 );
+			var r38 = R38CSG.subtract( f38CSG );
+			var R38 = THREE.CSG.toMesh( r38 );
+			R38.rotateZ(0.523599);
+			R38.translateX(-2.8);
+			R38.translateY(0);
+			
+			var R39CSG = THREE.CSG.fromMesh( R36 );
+			var f39CSG = THREE.CSG.fromMesh( R38 );
+			var r39 = R39CSG.union( f39CSG );
+			var R39 = THREE.CSG.toMesh( r39 );
+			R39.material = Mmaterial2;
+			R38.translateZ(-1.6);
+			
+			var R40CSG = THREE.CSG.fromMesh( R39 );
+			var f40CSG = THREE.CSG.fromMesh( R38 );
+			var r40 = R40CSG.union( f40CSG );
+			var R40 = THREE.CSG.toMesh( r40 );
+			R40.material = Mmaterial2;
+			
+			var R41CSG = THREE.CSG.fromMesh( f42 );
+			var f41CSG = THREE.CSG.fromMesh( f43 );
+			var r41 = R41CSG.union( f41CSG );
+			var R41 = THREE.CSG.toMesh( r41 );
+			R41.material = Mmaterial2;
+			
+			var R42CSG = THREE.CSG.fromMesh( f44 );
+			var f42CSG = THREE.CSG.fromMesh( f45 );
+			var r42 = R42CSG.union( f42CSG );
+			var R42 = THREE.CSG.toMesh( r42 );
+			R42.material = Mmaterial2;
+			
+			var R43CSG = THREE.CSG.fromMesh( f46 );
+			var f43CSG = THREE.CSG.fromMesh( f47 );
+			var r43 = R43CSG.union( f43CSG );
+			var R43 = THREE.CSG.toMesh( r43 );
+			R43.material = Mmaterial2;
+			
+			var R44CSG = THREE.CSG.fromMesh( f48 );
+			var f44CSG = THREE.CSG.fromMesh( f49 );
+			var r44 = R44CSG.union( f44CSG );
+			var R44 = THREE.CSG.toMesh( r44 );
+			R44.material = Mmaterial2;
+			
+			//scene.add(f51);
+			//scene.add(f50);
+			
+			var R45CSG = THREE.CSG.fromMesh( f50 );
+			var f45CSG = THREE.CSG.fromMesh( f51 );
+			var r45 = R45CSG.subtract( f45CSG );
+			var R45 = THREE.CSG.toMesh( r45 );
+			var R46 = THREE.CSG.toMesh( r45 );
+			R45.material = Mmatcabe1;
+			R46.material = Mmatcabe2;
+			R45.translateX(2.2);
+			R45.translateY(3);
+			
+			R46.translateX(2.2);
+			R46.translateY(3);
+			
+			
+			cabeza1.add(R45);
+			cabezarota.add(R46);
+			piernasmysterio.add(R40);
+			piernasmysterio.add(R37);
+			antebrazoizquierdomysterio.add(R43);
+			antebrazoderechomysterio.add(R44);
+			brazoderechomysterio.add(R42);
+			brazoizquierdomysterio.add(R41);
+			
+			
+			
+			
+			//mrmistery.add(cabeza1);
+			cabeza1.add(cabezarota);
+			cabeza1.add(piernasmysterio);
+			cabeza1.add(antebrazoizquierdomysterio);
+			cabeza1.add(antebrazoderechomysterio);
+			cabeza1.add(brazoderechomysterio);
+			cabeza1.add(brazoizquierdomysterio);
+			cabeza1.add(torsomysterio);
+			//cabeza1.add(mrmistery);
+			
+			cabeza1.applyMatrix( new THREE.Matrix4().makeScale(0.35,0.35,0.35) );
+			cabeza1.translateY(1.7);
+			
+			
+			scene.add(cabeza1);
+			
+			/*
+			scene.add(cabeza1);
+			
+			//scene.add(cabezarota);
+			scene.add(antebrazoderechomysterio);
+			scene.add(antebrazoizquierdomysterio);
+			scene.add(brazoderechomysterio);
+			scene.add(brazoizquierdomysterio);
+			scene.add(piernasmysterio);
+			scene.add(torsomysterio);
+			*/
+				
+				
+				
+				///////////Fin Mysterio
+			
+			
+			//////////Spiderman
+			
+		
+			var CabezaGeometry = new THREE.SphereGeometry( 0.7, 32, 32 );
+			var CabezaGeometry2 = new THREE.BoxGeometry( 1.2, 1.2 ,1.2 );
+			var CuelloGeometry = new THREE.CylinderGeometry( .4, .4, .7, 32 );
+			var CuerpoGeometry = new THREE.BoxGeometry( 3.0, 2.1 ,1.5 );
+			
+			var EspaldaGeometry = new THREE.PlaneGeometry( 3.0, 2.1 ,.2 );
+			
+			var CaderaGeometry = new THREE.BoxGeometry( 3.0, 2.8 ,1.5 );
+			
+			var Cadera_IGeometry = new THREE.BoxGeometry( 1.0, 2.8 ,3.0 );
+			
+			var PiernaD_1Geometry = new THREE.SphereGeometry( .6, 32, 32 );
+			
+			var PiernaD_2Geometry = new THREE.CylinderGeometry( .6, .5, 1.7, 32 );
+			
+			var PiernaD_3Geometry = new THREE.SphereGeometry( .5, 32, 32 );
+			
+			var PiernaD_4Geometry = new THREE.CylinderGeometry( .5, .4, 1.2, 32 );
+			
+			var PiernaD_5Geometry = new THREE.SphereGeometry( .4, 32, 32 );
+			
+			var PiernaD_6Geometry = new THREE.CylinderGeometry( .4, .3, 1.2, 32 );
+			
+			var BrazoD_1Geometry = new THREE.SphereGeometry( .6, 32, 32 );
+			
+			var BrazoD_2Geometry = new THREE.CylinderGeometry( .4, .5, 1.5, 32 );
+			
+			var BrazoD_3Geometry = new THREE.SphereGeometry( .4, 32, 32 );
+			
+			var BrazoD_4Geometry = new THREE.CylinderGeometry( .3, .4, 1.2, 32 );
+			
+			var BrazoD_5Geometry = new THREE.SphereGeometry( .3, 32, 32 );
+			
+			
+			
+			
+			
+			
+			
+		
+			//CREAR LOS MATERIALES
+            var material1 = new THREE.MeshStandardMaterial( { color: 0x8c1f0e, metalness: 0, roughness: 0.1 } );
+			var material4 = new THREE.MeshStandardMaterial( { color: 0x040652, metalness: 0, roughness: 0.1 } );
+			var material3 = new THREE.MeshStandardMaterial( { color: colorB, metalness: 0.5, roughness: 0.1 } );
+			var material2 = new THREE.MeshStandardMaterial( { color: colorG, metalness: 0.5, roughness: 0.1, transparent:true, opacity: 0.5  } );
+			
+			//CREAR LAS MALLAS
+			var Cabeza = new THREE.Mesh( CabezaGeometry );
+			var Cabeza2 = new THREE.Mesh( CabezaGeometry2 );
+			var Cuello = new THREE.Mesh( CuelloGeometry );
+			var Cuerpo = new THREE.Mesh( CuerpoGeometry );
+			var Espalda = new THREE.Mesh( EspaldaGeometry );
+			var Cadera = new THREE.Mesh( CaderaGeometry );
+			var Cadera_I = new THREE.Mesh( Cadera_IGeometry );
+			var Cadera_D = new THREE.Mesh( Cadera_IGeometry );
+			var Cadera_U = new THREE.Mesh( Cadera_IGeometry );
+			var PiernaD_1 = new THREE.Mesh( PiernaD_1Geometry );
+			var PiernaD_2 = new THREE.Mesh( PiernaD_2Geometry );
+			var PiernaD_3 = new THREE.Mesh( PiernaD_3Geometry );
+			var PiernaD_4 = new THREE.Mesh( PiernaD_4Geometry );
+			var PiernaD_5 = new THREE.Mesh( PiernaD_5Geometry );
+			var PiernaD_6 = new THREE.Mesh( PiernaD_6Geometry );
+			var BrazoD_1 = new THREE.Mesh( BrazoD_1Geometry );
+			var BrazoD_2 = new THREE.Mesh( BrazoD_2Geometry );
+			var BrazoD_3 = new THREE.Mesh( BrazoD_3Geometry );
+			var BrazoD_4 = new THREE.Mesh( BrazoD_4Geometry );
+			var BrazoD_5 = new THREE.Mesh( BrazoD_5Geometry );
+			var PiernaI_1 = new THREE.Mesh( PiernaD_1Geometry );
+			var PiernaI_2 = new THREE.Mesh( PiernaD_2Geometry );
+			var PiernaI_3 = new THREE.Mesh( PiernaD_3Geometry );
+			var PiernaI_4 = new THREE.Mesh( PiernaD_4Geometry );
+			var PiernaI_5 = new THREE.Mesh( PiernaD_5Geometry );
+			var PiernaI_6 = new THREE.Mesh( PiernaD_6Geometry );
+			var BrazoI_1 = new THREE.Mesh( BrazoD_1Geometry );
+			var BrazoI_2 = new THREE.Mesh( BrazoD_2Geometry );
+			var BrazoI_3 = new THREE.Mesh( BrazoD_3Geometry );
+			var BrazoI_4 = new THREE.Mesh( BrazoD_4Geometry );
+			var BrazoI_5 = new THREE.Mesh( BrazoD_5Geometry );
+			
+			
+			Cadera_D.rotateZ(Math.PI/7);
+			Cadera_I.rotateZ(-Math.PI/7);
+			Cadera_U.rotateZ(-Math.PI/2);
+			
+					
+			Cadera_U.translateX(1.3);
+			
+			
+			Cuerpo.translateY(6.8);
+			Cuerpo.rotateY(Math.PI/2);
+			
+			Cadera_I.translateX(1.5);
+			
+			Cadera_D.translateX(-1.5);
+			
+			
+			PiernaD_1.translateY(4.0);
+			PiernaD_1.translateZ(1.0);
+			
+			PiernaD_2.translateY(2.7);
+			PiernaD_2.translateZ(1.0);
+			
+			PiernaD_3.translateY(1.5);
+			PiernaD_3.translateZ(1.0);
+			
+		    PiernaD_4.translateY(.7);
+			PiernaD_4.translateZ(1.0);
+			
+			PiernaD_5.translateZ(1.0);
+			
+		 	PiernaD_6.rotateZ(Math.PI/2);
+			PiernaD_6.translateZ(1.0);
+			PiernaD_6.translateY(-1.0);
+			///////////////////
+			PiernaI_1.translateY(4.0);
+			PiernaI_1.translateZ(-1.0);
+			
+			PiernaI_2.translateY(2.7);
+			PiernaI_2.translateZ(-1.0);
+			
+			PiernaI_3.translateY(1.5);
+			PiernaI_3.translateZ(-1.0);
+			
+		    PiernaI_4.translateY(.7);
+			PiernaI_4.translateZ(-1.0);
+			
+			PiernaI_5.translateZ(-1.0);
+		
+		 	PiernaI_6.rotateZ(Math.PI/2);
+			PiernaI_6.translateZ(-1.0);
+			PiernaI_6.translateY(-1.0);
+			/////////////////
+			BrazoD_1.translateY(7.5);
+			BrazoD_1.translateZ(1.5);
+			
+			BrazoD_2.translateY(8.5);
+			BrazoD_2.translateZ(1.0);
+			BrazoD_2.translateX(1);
+			
+			BrazoD_2.translateZ(.5);
+			BrazoD_2.rotateZ(-Math.PI/4);
+			
+			BrazoD_3.translateY(9);
+			BrazoD_3.translateZ(1.5);
+			BrazoD_3.translateX(1.5);
+			
+			
+			BrazoD_4.translateY(9.7);
+			BrazoD_4.translateX(2);
+			BrazoD_4.translateZ(1.5);
+			BrazoD_4.rotateZ(-Math.PI/5);
+			
+			BrazoD_5.translateY(10.3);
+			BrazoD_5.translateZ(1.5);
+			BrazoD_5.translateX(2.5);
+			
+			
+			///////////////////////////////
+			
+			
+			
+			BrazoI_1.translateY(7.5);
+			BrazoI_1.translateZ(-1.5);
+			
+			BrazoI_2.translateY(8.5);
+			BrazoI_2.translateZ(-1.0);
+			BrazoI_2.translateX(1);
+			
+			BrazoI_2.translateZ(-.5);
+			BrazoI_2.rotateZ(-Math.PI/4);
+			
+			
+			
+			BrazoI_3.translateY(9);
+			BrazoI_3.translateZ(-1.5);
+			BrazoI_3.translateX(1.5);
+			
+			
+			BrazoI_4.translateY(9.7);
+			BrazoI_4.translateX(2);
+			BrazoI_4.translateZ(-1.5);
+			BrazoI_4.rotateZ(-Math.PI/5);
+			
+			BrazoI_5.translateY(10.3);
+			BrazoI_5.translateZ(-1.5);
+			BrazoI_5.translateX(2.5);
+			
+			
+			
+			Espalda.translateY(6.8);
+			Espalda.translateZ(-.8);
+			Espalda.rotateY(-Math.PI);
+
+			//CONVERTIR A CSG
+			var CabezaCSG = THREE.CSG.fromMesh( Cabeza );
+			var Cabeza2CSG = THREE.CSG.fromMesh( Cabeza2 );
+			
+			var CaderaCSG = THREE.CSG.fromMesh( Cadera );
+			var Cadera_DCSG = THREE.CSG.fromMesh( Cadera_D );
+			var Cadera_ICSG = THREE.CSG.fromMesh( Cadera_I );
+			var Cadera_UCSG = THREE.CSG.fromMesh( Cadera_U );
+			
+			var PiernaD_1CSG = THREE.CSG.fromMesh( PiernaD_1 );
+			var PiernaD_2CSG = THREE.CSG.fromMesh( PiernaD_2 );
+			var PiernaD_3CSG = THREE.CSG.fromMesh( PiernaD_3 );
+			var PiernaD_4CSG = THREE.CSG.fromMesh( PiernaD_4 );
+			var PiernaD_5CSG = THREE.CSG.fromMesh( PiernaD_5 );
+			var PiernaD_6CSG = THREE.CSG.fromMesh( PiernaD_6 );
+			
+			var BrazoD_1CSG = THREE.CSG.fromMesh( BrazoD_1 );
+			var BrazoD_2CSG = THREE.CSG.fromMesh( BrazoD_2 );
+			var BrazoD_3CSG = THREE.CSG.fromMesh( BrazoD_3 );
+			var BrazoD_4CSG = THREE.CSG.fromMesh( BrazoD_4 );
+			var BrazoD_5CSG = THREE.CSG.fromMesh( BrazoD_5 );
+			
+			var PiernaI_1CSG = THREE.CSG.fromMesh( PiernaI_1 );
+			var PiernaI_2CSG = THREE.CSG.fromMesh( PiernaI_2 );
+			var PiernaI_3CSG = THREE.CSG.fromMesh( PiernaI_3 );
+			var PiernaI_4CSG = THREE.CSG.fromMesh( PiernaI_4 );
+			var PiernaI_5CSG = THREE.CSG.fromMesh( PiernaI_5 );
+			var PiernaI_6CSG = THREE.CSG.fromMesh( PiernaI_6 );
+			
+			var BrazoI_1CSG = THREE.CSG.fromMesh( BrazoI_1 );
+			var BrazoI_2CSG = THREE.CSG.fromMesh( BrazoI_2 );
+			var BrazoI_3CSG = THREE.CSG.fromMesh( BrazoI_3 );
+			var BrazoI_4CSG = THREE.CSG.fromMesh( BrazoI_4 );
+			var BrazoI_5CSG = THREE.CSG.fromMesh( BrazoI_5 );
+			
+			var EspaldaCSG = THREE.CSG.fromMesh( Espalda );
+			
+
+			//APLICAR LAS OPERACIONES
+			var result1 = CabezaCSG.intersect( Cabeza2CSG );
+			var result2 = CaderaCSG.subtract( Cadera_DCSG ).subtract( Cadera_ICSG ).subtract(Cadera_UCSG);
+			
+			
+			//CONVERTIR A MALLA DE THREE JS NUEVAMENTE
+			var CabezaT = THREE.CSG.toMesh( result1 );
+			
+			
+			var CaderaT = THREE.CSG.toMesh( result2 );
+		
+			
+			
+			
+		 
+			
+			
+			CabezaT.material = material1; 
+			CaderaT.material = material1;
+			Cuerpo.material = material1;
+			Cuello.material = material4;
+			Espalda.material = material4;
+			
+			PiernaD_1.material = material4;
+			PiernaI_1.material = material4;
+			PiernaD_2.material = material4;
+			PiernaI_2.material = material4;
+			PiernaD_3.material = material4;
+			PiernaI_3.material = material4;
+			PiernaD_4.material = material1;
+			PiernaI_4.material = material1;
+			PiernaD_5.material = material1;
+			PiernaI_5.material = material1;
+			PiernaD_6.material = material1;
+			PiernaI_6.material = material1;
+			BrazoD_1.material = material4;
+			BrazoI_1.material = material4;
+			BrazoD_2.material = material4;
+			BrazoI_2.material = material4;
+			BrazoD_3.material = material4;
+			BrazoI_3.material = material4;
+			BrazoD_4.material = material1;
+			BrazoI_4.material = material1;
+			BrazoD_5.material = material4;
+			BrazoI_5.material = material4;
+			
+			
+		
+			CabezaT.translateY(9.0);
+			
+			Cuello.translateY(8.2);
+			
+			CaderaT.translateY(4.5);
+			CaderaT.rotateY(Math.PI/2);
+			
+			
+			
+			//CONVERTIR A CSG
+			var CabezaTCSG = THREE.CSG.fromMesh( CabezaT );
+			var CuerpoCSG = THREE.CSG.fromMesh( Cuerpo );
+			var CaderaTCSG = THREE.CSG.fromMesh( CaderaT );
+			
+		
+			var CuelloCSG = THREE.CSG.fromMesh( Cuello );
+			//APLICAR LAS OPERACIONES
+			
+			//CONVERTIR A MALLA DE THREE JS NUEVAMENTE
+			
+			//MATERIAL
+		
+			CabezaT.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			CaderaT.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			Cuerpo.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			Cuello.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			Espalda.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			
+			PiernaD_1.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaI_1.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaD_2.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaI_2.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaD_3.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaI_3.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaD_4.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaI_4.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaD_5.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaI_5.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaD_6.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			PiernaI_6.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoD_1.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoI_1.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoD_2.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoI_2.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoD_3.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoI_3.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoD_4.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoI_4.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoD_5.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			BrazoI_5.applyMatrix( new THREE.Matrix4().makeScale(1/4.5,1/4.5,1/4.5) );
+			
+			
+			///////////////////////////
+			
+		
+			
+			
+			
+			
+			//AGREGAR A LA ESCENA LOS DIFERENTES ELEMENTOS
+			
+			
+			//scene.add( Todojunto );
+			
+			//scene.add( PiernaDT );
+			
+			
+			brazoDDD.add( BrazoD_1 );
+			brazoDDD.add( BrazoD_2 );
+			brazoDDD.add( BrazoD_3 );
+			brazoDDD.add( BrazoD_4 );
+			brazoDDD.add( BrazoD_5 );
+			
+			//cabeza1.add(brazoDDD);
+			Brazossss.add(brazoDDD);
+			
+			
+			piernaDDD.add( PiernaD_1 );
+			piernaDDD.add( PiernaD_2 );
+			piernaDDD.add( PiernaD_3 );
+			piernaDDD.add( PiernaD_4 );
+			piernaDDD.add( PiernaD_5 );
+			piernaDDD.add( PiernaD_6 );
+			
+			Piernassss.add(piernaDDD);
+			
+			brazoZZZ.add( BrazoI_1 );
+			brazoZZZ.add( BrazoI_2 );
+			brazoZZZ.add( BrazoI_3 );
+			brazoZZZ.add( BrazoI_4 );
+			brazoZZZ.add( BrazoI_5 );
+			
+			Brazossss.add(brazoZZZ);
+			
+			scene.add(Brazossss);
+			
+			piernaZZZ.add( PiernaI_1 );
+			piernaZZZ.add( PiernaI_2 );
+			piernaZZZ.add( PiernaI_3 );
+			piernaZZZ.add( PiernaI_4 );
+			piernaZZZ.add( PiernaI_5 );
+			piernaZZZ.add( PiernaI_6 );
+			
+			Piernassss.add(piernaZZZ);
+			scene.add(Piernassss);
+			
+			cabezaspidy.add( Cuello );
+			
+			todotorso.add( Cuerpo );
+			
+			todotorso.add( Espalda );
+			
+			cabezaspidy.add( CabezaT );
+			
+			todotorso.add( CaderaT );
+			
+						scene.add(cabezaspidy);
+						scene.add(todotorso);
+			
+			/////////////////////Fin Spiderman
+			
+			//scene.add(R31);
+				
+				
+				
+			camera.lookAt( origin );
+		}
+		function animate(){
+			requestAnimationFrame( animate );
+			controls.update();
+			
+			console.log(dele);
+			//console.log(time);
+			
+			if ( time< 7&&dele==true ){
+				render1();
+				}
+				if ( time> 7&&time<13 ){
+				render2();
+				}
+				
+				if ( time> 13&&time<19 ){
+				render3();
+				}
+				
+				if ( time> 19&&time<21 ){
+				render4();
+				}
+				
+				if ( time> 21&&time<28 ){
+				render5();
+				}
+				
+				if ( time> 28&&time<31 ){
+				render6();
+				}
+				
+				if ( time> 31&&time<46 ){
+				render7();
+				}
+				
+				if ( time> 46&&time<50 ){
+				render8();
+				}
+				if ( time> 50&&time<57 ){
+				render9();
+				}
+					if ( time> 57 ){
+				render10();
+				}
+				
+			
+		}
+		function render1(){
+			
+			cabeza1.translateY(0.0001);
+			cabeza1.translateX(-0.0001);
+			cabeza1.rotateZ(0.0002);
+			Brazossss.rotateZ(0.0002);
+			todotorso.translateX(-0.0002);
+			Piernassss.translateX(-0.0002);
+			
+			 var dtime = Date.now()-startTime;
+			// time=time+0.027;
+			time=time+0.02;
+			
+					/*brazoDDD.rotate(1.4);
+					brazoZZZ.rotate(1.4);*/
+					
+			
+        camera.position.x = -5+(dtime/20000);
+		camera.position.y = 3;
+        camera.position.z = 2.5-(dtime/20000);
+        camera.lookAt( 0, 0, 0 );
+        renderer.render( scene, camera );
+					
+		}
+		function render2(){
+			
+			cabeza1.translateY(-0.0002);
+			cabeza1.translateX(0.0004);
+			cabeza1.rotateZ(-0.0003);
+			Brazossss.rotateZ(-0.0004);
+			todotorso.translateX(0.0005);
+			Piernassss.translateX(0.0005);
+			cabezaspidy.translateX(0.0005);
+			
+			 var dtime = Date.now()-startTime;
+			//time=time+0.027;
+       time=time+0.03;
+	   
+	   camera.position.x = 1.5;
+			camera.position.y = -0.5;
+		  	camera.position.z = 4;
+	   
+        camera.lookAt( 1, 1, 0 );
+        renderer.render( scene, camera );
+			
+		}
+		function render3(){
+			
+			 var dtime = Date.now()-startTime;
+			 //time=time+0.027;
+       time=time+0.03;
+			
+        camera.position.x = -0.3;
+			camera.position.y = 1.5;
+		  	camera.position.z = 1;
+        camera.lookAt( 1, 2, 0.5 );
+        renderer.render( scene, camera );
+					}
+		function render4(){
+		
+			cabezaspidy.rotateZ(0.0002);
+			todotorso.rotateZ(0.0002);
+			Brazossss.translateX(-0.0003);
+			Piernassss.translateX(-0.0003);
+			cabeza1.translateX(-0.0001);
+			
+			 var dtime = Date.now()-startTime;
+			//time=time+0.027;
+       time=time+0.008;
+			
+        camera.position.x = 1;
+			camera.position.y = 0.5;
+		  	camera.position.z = 0;
+        camera.lookAt( 0, 1, 0);
+        renderer.render( scene, camera );
+					}
+		function render5(){
+			
+				cabezaspidy.rotateZ(-0.00015);
+				todotorso.rotateZ(-0.00015);
+				cabezaspidy.translateX(-0.00008);
+				Brazossss.translateX(0.0003);
+				cabeza1.translateX(0.0003);
+				Piernassss.translateX(0.00015);
+			
+			 var dtime = Date.now()-startTime;
+			 //time=time+0.027;
+       time=time+0.01;
+			
+        camera.position.x = -1+(-2.5*(Math.cos(dtime/20000)));
+		camera.position.y = 3;
+        camera.position.z = 2.5+(1.5*(Math.sin(dtime/20000)));
+        camera.lookAt( 0, 0, 0 );
+        renderer.render( scene, camera );
+					
+		}
+		
+		function render6(){
+			
+				cabezaspidy.rotateZ(0.0004);
+				todotorso.rotateZ(0.0004);
+				cabezaspidy.translateX(0.00015);
+				todotorso.translateX(0.00015);
+				Brazossss.translateX(-0.0005);
+				Piernassss.translateX(-0.0005);
+				cabeza1.translateX(-0.0004);
+			//Piernassss.translateX(0.0005);
+			
+			 var dtime = Date.now()-startTime;
+			 //time=time+0.027;
+       time=time+0.008;
+			
+        camera.position.x = 1;
+			camera.position.y = 0.5;
+		  	camera.position.z = 0;
+        camera.lookAt( 0, 1, 0);
+        renderer.render( scene, camera );
+					}
+					
+					function render7(){
+			
+				cabezaspidy.rotateZ(-0.0004);
+				todotorso.rotateZ(-0.0004);
+				cabezaspidy.translateX(-0.00015);
+				todotorso.translateX(-0.00015);
+				Brazossss.translateX(0.0004);
+				cabeza1.translateX(0.0004);
+			Piernassss.translateX(0.001);
+			 var dtime = Date.now()-startTime;
+			 //time=time+0.027;
+       time=time+0.08;
+			
+        camera.position.x = -0.3;
+			camera.position.y = 1.5;
+		  	camera.position.z = 1;
+        camera.lookAt( 1, 2, 0.5 );
+        renderer.render( scene, camera );
+					}
+					function render8(){
+			
+				cabezaspidy.rotateZ(-0.0002);
+				todotorso.rotateZ(-0.0002);
+				cabezaspidy.translateX(-0.00013);
+				todotorso.translateX(-0.00013);
+				Brazossss.translateX(0.0002);
+				//Piernassss.translateX(0.0002);
+				//cabeza1.translateX(0.0001);
+			
+			 var dtime = Date.now()-startTime;
+			 //time=time+0.027;
+       time=time+0.008;
+			
+        camera.position.x = 1;
+			camera.position.y = 1.7;
+		  	camera.position.z = 1.5;
+        camera.lookAt( 0, 1, 0 );
+        renderer.render( scene, camera );
+					}
+					
+					function render9(){
+			
+				cabezaspidy.rotateZ(0.0004);
+				todotorso.rotateZ(0.0004);
+				cabezaspidy.translateX(0.00035);
+				todotorso.translateX(0.00035);
+				Brazossss.translateX(-0.0004);
+				cabeza1.translateX(-0.0004);
+			
+			 var dtime = Date.now()-startTime;
+			 //time=time+0.027;
+       time=time+0.01;
+			
+        camera.position.x = -0.2;
+			camera.position.y = 0.8;
+		  	camera.position.z = 1.1;
+        camera.lookAt( 1, 1.5, -0.4 );
+        renderer.render( scene, camera );
+					}
+					
+					function render10(){
+			 var dtime = Date.now()-startTime;
+			 //time=time+0.027;
+       time=time+0.02;
+			
+        camera.position.x = 1;
+			camera.position.y = 1.7;
+		  	camera.position.z = 1.5;
+        camera.lookAt( 0, 1, 0 );
+        renderer.render( scene, camera );
+					}
+					
+					
+    </script>
+  </body>
+</html>
